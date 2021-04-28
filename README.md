@@ -1,3 +1,5 @@
 # FAST_Line_Follower_STM32H7
-Moje repozytorium jeśli chcesz możesz te pliki przejrzeć a dostępny w nich kod wykorzystać wedle uznania z tym że jeśli się poznamy
-a kod będzie dla ciebie użyteczny możesz mi kupić piwo ;) 
+Hi!
+This repository contains the code for my first serious microcontroller project. Link to the demo video: https://youtu.be/MG3MgTwvwnU . I speak Polish on the video.
+
+I am not satisfied with the quality of this code. This project is my first approach to programming and microcontrollers ....

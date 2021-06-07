@@ -4,4 +4,5 @@ This repository contains the code for my first serious microcontroller project. 
 
 I am not satisfied with the quality of this code. This project is my first approach to programming and microcontrollers ....
 
-![NaTorze}(https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/ApkaiRobot.PNG)
+![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/ApkaiRobot.PNG)
+![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/NaTorze.PNG)

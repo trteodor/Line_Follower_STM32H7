@@ -1,0 +1,13 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [LF_v5_HM10Connetor.PrjPcb]
+   Generated File[LF_v5_HM10_Conn.TXT]
+   Generated File[LF_v5_HM10_Conn.DRL]
+   Generated File[LF_v5_HM10_Conn.LDP]
+   Generated File[LF_v5_HM10_Conn.DRR]
+
+
+Files Generated   : 4
+Documents Printed : 0
+
+Finished Output Generation At 18:36:47 On 13.10.2021

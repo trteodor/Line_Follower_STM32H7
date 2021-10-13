@@ -1,0 +1,6 @@
+Record=TopLevelDocument|FileName=Line_Follower_v5.SchDoc|SheetNumber= 
+Record=SheetSymbol|SourceDocument=Line_Follower_v5.SchDoc|Designator=Connectors|SchDesignator=Connectors|FileName=Connectors&Periph.SchDoc|SheetNumber= |SymbolType=Normal|RawFileName=Connectors&Periph.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=Line_Follower_v5.SchDoc|Designator=Microcontroller|SchDesignator=Microcontroller|FileName=Microcontroller.SchDoc|SheetNumber= |SymbolType=Normal|RawFileName=Microcontroller.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=Line_Follower_v5.SchDoc|Designator=Motor_Driver|SchDesignator=Motor_Driver|FileName=Motor_Driver.SchDoc|SheetNumber=4|SymbolType=Normal|RawFileName=Motor_Driver.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=Line_Follower_v5.SchDoc|Designator=Power|SchDesignator=Power|FileName=Power.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=Power.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=NoMainPathDocument|SourceDocument=Line_Follower_v5.SchDoc|FileName=Line_Follower_v4.SchDoc|SheetNumber=1

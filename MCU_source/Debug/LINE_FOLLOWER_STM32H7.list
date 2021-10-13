@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0003f149  00000000  00000000  0007ee48  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002c5ae  00000000  00000000  000bdf91  2**0
+ 17 .debug_line   0002c365  00000000  00000000  000bdf91  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0017cb8b  00000000  00000000  000ea53f  2**0
+ 18 .debug_str    0017cb96  00000000  00000000  000ea2f6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  002670ca  2**0
+ 19 .comment      00000053  00000000  00000000  00266e8c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000096b8  00000000  00000000  00267120  2**2
+ 20 .debug_frame  000096b8  00000000  00000000  00266ee0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3173,7 +3173,7 @@ c=DANE_BLE[size_BLE];
  8001c00:	4b92      	ldr	r3, [pc, #584]	; (8001e4c <KOMENDY_BLE+0x294>)
  8001c02:	701a      	strb	r2, [r3, #0]
 
-
+//Ehh jak sie nie umie dekodowac UCF-8 to sie kombinuje
 if(c==147 || c==134)
  8001c04:	4b91      	ldr	r3, [pc, #580]	; (8001e4c <KOMENDY_BLE+0x294>)
  8001c06:	781b      	ldrb	r3, [r3, #0]
@@ -3219,7 +3219,7 @@ if(c==146)
  8001c4a:	701a      	strb	r2, [r3, #0]
 
 
-				//Dobrze byłoby to zrobic na switchu tylko to przerzucic...
+				//Dobrze byłoby to zrobic na switchu no ale bd tak
 
 
 	if(c=='I'){wynik=222; URUCHAMIANIE_ROBOTA=1; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //jedz ( uruchamianie robota)
@@ -7740,7 +7740,7 @@ void IR_INIT()
 {
  8003f0c:	b580      	push	{r7, lr}
  8003f0e:	af00      	add	r7, sp, #0
-	 HAL_TIM_Base_Start_IT(&htim2); //Turn on IRDA //must be correctly configured to interrupt after 100us
+	 HAL_TIM_Base_Start_IT(&htim2); //Turn on Timer
  8003f10:	4803      	ldr	r0, [pc, #12]	; (8003f20 <IR_INIT+0x14>)
  8003f12:	f00a fed7 	bl	800ecc4 <HAL_TIM_Base_Start_IT>
 	 EEPROM_IR_STATE_READ();            //--<< Set it in Bluetooth APP

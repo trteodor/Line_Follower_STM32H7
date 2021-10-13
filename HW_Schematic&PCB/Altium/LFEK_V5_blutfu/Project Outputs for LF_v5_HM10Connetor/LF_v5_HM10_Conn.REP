@@ -1,0 +1,186 @@
+*************************************************************
+FileName = LF_v5_HM10_Conn.GBR
+AutoAperture = True
+*************************************************************
+Generating : Mechanical 15
+      File : LF_v5_HM10_Conn.GM15
+
+    Adding Layer      : Mechanical 15
+
+
+Used DCodes :
+    D22
+*************************************************************
+
+*************************************************************
+Generating : 3DT
+      File : LF_v5_HM10_Conn.GM13
+
+    Adding Layer      : 3DT
+
+
+Used DCodes :
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Milling
+      File : LF_v5_HM10_Conn.GM1
+
+    Adding Layer      : Milling
+
+
+Used DCodes :
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : LF_v5_HM10_Conn.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D17
+    D18
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : LF_v5_HM10_Conn.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D17
+    D18
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : LF_v5_HM10_Conn.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D14
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : LF_v5_HM10_Conn.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : LF_v5_HM10_Conn.GPT
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D14
+    D20
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Top Layer
+      File : LF_v5_HM10_Conn.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D13
+    D14
+    D19
+    D20
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : LF_v5_HM10_Conn.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D20
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Bottom Pad Master
+      File : LF_v5_HM10_Conn.GPB
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D20
+    D21
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : LF_v5_HM10_Conn.GD1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D23
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : LF_v5_HM10_Conn.GG1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D23
+*************************************************************
+

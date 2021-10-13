@@ -3,6 +3,11 @@
  *
  *  Created on: Sep 21, 2020
  *      Author: Teodor
+ *
+ *      145 / 5000
+ * This application is of very poor quality, only a small refactoring has been made
+ * to increase readability. However, somehow it leaves a lot to be desired.
+ * Refactored 10.2021
  */
 
  //DANE_BLE[80];
@@ -50,13 +55,13 @@ void KOMENDY_BLE()
 size_BLE--;
 size_BLE--;
 c=DANE_BLE[size_BLE];
-if(c==226)
+if(c==226) //? wtf
 {
 	size_BLE--;
 }
 c=DANE_BLE[size_BLE];
 
-//Ehh jak sie nie umie dekodowac UCF-8 to sie kombinuje
+
 if(c==147 || c==134)
 {
 	drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=1;//SAVE_DATA
@@ -101,9 +106,9 @@ if(c==146)
 	      else if(c=='@'){wynik=16; czujnikiactiv  =0; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //ER7
 	      else if(c=='!'){wynik=17; czujnikiactiv  =0; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //ERMAX
 
+	      else if(c==167){wynik=40; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //CZCZ1 //alt+21 nadaje apka  - § <<ten znaczek //bylo "G" nie wiem skad problem
 	      else if(c=='H'){wynik=41; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //CZCZ2
 	      else if(c=='Q'){wynik=42; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //CZCZ3
-	      else if(c==167){wynik=40; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //CZCZ1 //alt+21 nadaje apka  - § <<ten znaczek //bylo "G" nie wiem skad problem
 	      else if(c=='W'){wynik=43; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //CZCZ4
 	      else if(c=='?'){wynik=44; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //CZCZ5
 	      else if(c=='L'){wynik=45; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //CZCZ6

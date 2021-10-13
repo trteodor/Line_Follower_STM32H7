@@ -41,38 +41,28 @@ void Robot_Control()
 	    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,1000);
 	    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,1000);
 	}
-
 }
 
 
 void Decode_PID()
 {
+	if(Pr_Silnika_Lewego<0)
+		{
+			Pr_Silnika_Lewego=Pr_Silnika_Lewego*(-1);
 
+			LEWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			return;
+		}
 
+	if(Pr_Silnika_Prawego<0)
+		{
+			Pr_Silnika_Prawego=Pr_Silnika_Prawego*(-1);
 
+			PRAWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			return;
+		}
 
-if(Pr_Silnika_Lewego<0)
-{
-	Pr_Silnika_Lewego=Pr_Silnika_Lewego*(-1);
-
-	LEWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
-	return;
-}
-else if(Pr_Silnika_Prawego<0)
-{
-	Pr_Silnika_Prawego=Pr_Silnika_Prawego*(-1);
-
-	PRAWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
-	return;
-}
-else
 	JAZDA_DO_PRZODU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
 }
-
-
-
-
-
-
 
 #endif /* SRC_URUCHAMIANIE_C_ */

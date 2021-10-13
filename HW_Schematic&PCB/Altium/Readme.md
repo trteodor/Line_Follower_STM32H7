@@ -1,4 +1,4 @@
-Altium Designer viewer - is free, so you could be able to open this file, and view schematic and PCB.
+Altium Designer viewer - is free, so you could be able to open this files, and view schematic and PCB.
 
 Production files are attached in the appropriate folders.
 

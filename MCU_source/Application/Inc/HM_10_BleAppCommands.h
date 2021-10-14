@@ -1,17 +1,12 @@
 /*
- * Komendy_BLE.h
- *
- *  Created on: Sep 21, 2020
+ *  Created on: 10.10.2021
  *      Author: Teodor
- * This application is of very poor quality, only a small refactoring has been made
- * to increase readability. However, somehow it leaves a lot to be desired.
- * Refactored 10.2021
  */
 
-#ifndef SRC_KOMENDY_BLE_H_
-#define SRC_KOMENDY_BLE_H_
+#ifndef HM10Commands_H_
+#define HM10Commands_H_
 
-#include "stm32h7xx_hal.h"
+#include "main.h"
 
 
 #define DrivingStartCommand 'I'
@@ -21,21 +16,23 @@
 
 /* @@@@@ @@@@ "Basic" Screen in Mobile App */
 
+
 #define StartPIDScanning 'P'
 #define StopPIDScanning 'O'
 #define SendActualPidSettings '>'
+/* Comands from Mobile App (Set variables) */
 #define SetPid_Kp '+'
 #define SetPid_Kd '-'
 #define SetPid_Ki '('
 #define SetBaseMotorSpeedValue ')'
 
-/* Send to mobile app */
+/* Send to mobile app commands*/
 #define PID_ActualValue "a"
 #define LeftMotorSpeed "s"
 #define RightMotorSpeed "d"
 #define ActualPositionError "ERROR:"
 #define PID_Ki_Sum "f"
-/* Actual PID from EEPROM */
+
 #define PID_KpComm "l"
 #define PID_KdComm "k"
 #define BaseMotorSpeed "m"
@@ -73,14 +70,14 @@
 #define SensorErWToM_App_Max '!'
 
 /* Read value when the line is detected from mobile App*/
-#define Sensor_1_LineIsDetectedValue 167
-#define Sensor_2_LineIsDetectedValue 'H'
-#define Sensor_3_LineIsDetectedValue 'Q'
-#define Sensor_4_LineIsDetectedValue 'W'
-#define Sensor_5_LineIsDetectedValue '?'
-#define Sensor_6_LineIsDetectedValue 'L'
-#define Sensor_7_LineIsDetectedValue 'T'
-#define Sensor_8_LineIsDetectedValue 'Y'
+#define S1_LineIsDetV 167
+#define S2_LineIsDetV 'H'
+#define S3_LineIsDetV 'Q'
+#define S4_LineIsDetV 'W'
+#define S5_LineIsDetV '?'
+#define S6_LineIsDetV 'L'
+#define S7_LineIsDetV 'T'
+#define S8_LineIsDetV 'Y'
 
 /* Send actual value when the line is detected to mobile App*/
 #define SensorLine_1_DetectValueToMobileAPP "§"
@@ -121,68 +118,5 @@
 #define IrSensor 'j' //?
 #define LedMode 'J' //?
 
-/*@@@@@ @@@@  EEPROM Location Definition*/
 
-#define EEPROM_Addr_PID_Kp 50
-#define EEPROM_Addr_PID_Kd 55
-#define EEPROM_AddrBaseMotorSpeedValue 60
-#define EEPROM_Addr_PID_Ki 65
-
-#define EEPROM_ErrW1_Addr 70
-#define EEPROM_ErrW2_Addr 75
-#define EEPROM_ErrW3_Addr 80
-#define EEPROM_ErrW4_Addr 85
-#define EEPROM_ErrW5_Addr 90
-#define EEPROM_ErrW6_Addr 100
-#define EEPROM_ErrW7_Addr 105
-#define EEPROM_ErrW_Max_Addr 115
-
-#define EEPROM_Sensor_1_LineIsDetectedValue_Addr 265
-#define EEPROM_Sensor_2_LineIsDetectedValue_Addr 245
-#define EEPROM_Sensor_3_LineIsDetectedValue_Addr 210
-#define EEPROM_Sensor_4_LineIsDetectedValue_Addr 215
-#define EEPROM_Sensor_5_LineIsDetectedValue_Addr 220
-#define EEPROM_Sensor_6_LineIsDetectedValue_Addr 225
-#define EEPROM_Sensor_7_LineIsDetectedValue_Addr 230
-#define EEPROM_Sensor_8_LineIsDetectedValue_Addr 235
-
-#define EEPROM_MAX_Pid_Value_Addr 400
-#define EEPROM_ReverseSpeed_Addr 405
-#define EEPROM_MaxSumValue_forPidKi_Addr 410
-#define EEPROM_PID_KdProbeTime_Addr 420
-#define EEPROM_Reserv3_Addr 440
-#define EEPROM_Reserv4_Addr 445
-#define EEPROM_IrSensorState_Addr 450
-#define EEPROM_LedModeState_Addr 455
-
-
-
-
-
-
-extern uint32_t AktualnyCzasK_BLE;
-extern uint32_t ZapamientanyCzasK_BLE;
-extern uint32_t Z_Czas_Do_Pliku;
-
-extern uint8_t wynik;
-extern uint8_t drukowanie;
-extern uint8_t c;
-extern uint8_t DANE_DO_TEXT;
-
-
-extern int k_wys_pom;
-extern uint8_t czujnikiactiv;
-extern 	float PID_value;
-
-extern void KOMENDY_BLE();
-extern void DRUKUJCZUJNIKI();
-extern void WyslijWartoscERR();
-extern void DRUKUJ_PID();
-extern void PID_DO_BLE();
-extern void DANE_DO_APLIKACJI_MOBILNEJ();
-extern void ZMIENNE_ZAAW_DO_BLE();
-
-extern void WYSLIJ_AKTUALNE_DANE_CZUJNIKOW_I_CZAS_DO_BLE();
-extern void Wyslij_PojedynczyCzujnik(uint16_t nr_czujnika);
-
-#endif /* SRC_KOMENDY_BLE_H_ */
+#endif /* HM10Commands_H_ */

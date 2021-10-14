@@ -4,51 +4,7 @@
  *  Created on: 6 wrz 2020
  *      Author: Teodor
  *
- *
- *
- *       You have to configure in CubeMX EXTI line where is TSOP2236 output, falling edge and with pull-up resistor.
- *       Later check the defines in header file
- *
- *       Next in file stm32fxxx_it.h (header)  below the line:  "USER CODE BEGIN ET"
- *       Add it:
- *        extern void IR_IT_Dec();
-		  extern uint32_t t2;
- *
- *      Next In file stm32fxxx_it.c in generated interuppt function as you can see example below,
- *
- *      	you have add function IR_IT_Dec(); calling as show below
- *
- *
- *      void EXTI15_10_IRQHandler(void)  //< your EXTI Line handler
-{
-   USER CODE BEGIN EXTI15_10_IRQn 0
-
-	IR_IT_Dec();   //Only Add this function calling here!!
-
-	 // __HAL_GPIO_EXTI_CLEAR_IT(PINIR_Pin); //Optionally
-   USER CODE END EXTI15_10_IRQn 0
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
-   USER CODE BEGIN EXTI15_10_IRQn 1
-
-   USER CODE END EXTI15_10_IRQn 1
-}
-
-//Is need the 100us resolution timer so configure it in CubeMX and follow steps below:
-
-Next in file stm32fxxx_it.c in your timer handler add the variable to increment
-void TIM2_IRQHandler(void)
-{
-   USER CODE BEGIN TIM2_IRQn 0
-   t2++;                       //<<Add this unsigned 32bit variable to increment after every Interrupt. Set increment evry 100us
-   USER CODE END TIM2_IRQn 0
-  HAL_TIM_IRQHandler(&htim2);
-   USER CODE BEGIN TIM2_IRQn 1
-
-   USER CODE END TIM2_IRQn 1
-}
-in the same file initialize the variale uint32_t t2; sure
- */
-
+*/
 
 #include "stm32h7xx_hal.h"
 #include "stm32h7xx_it.h"

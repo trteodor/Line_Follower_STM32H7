@@ -123,7 +123,7 @@ if(c==146)
     else if(c=='g'){wynik=30; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //MAX_PID_WARTOSC
     else if(c=='h'){wynik=131; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;} //pr_tyl
     else if(c=='q'){wynik=32; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //SUMAMAX
-    else if(c=='w'){wynik=33; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //Rezerww1
+    else if(c=='w'){wynik=33; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0;}  //PID_KdProbeTime
 
 
     else if(c=='e'){wynik=134; drukowanie=0; czujnikiactiv=0; k_wys_pom=1; DANE_DO_TEXT=0; } //test silnika   //zmienna 1
@@ -491,30 +491,30 @@ void PRZYPISYWANIEWARTOSCI()
 
 
 
-    if(wynik==40) {
-    	czcz1=atoi(DANE_BLE);  EEPROM_WRITE_INT(265,&czcz1); //adres 200 uszkodzony? tak
-    	}
-      if(wynik==41) {
-    	  czcz2=atoi(DANE_BLE);  EEPROM_WRITE_INT(245,&czcz2); //adres 205 uszkodzony? tak nwm o co kmn anyway
-      	  }
-      if(wynik==42) {
-    	  czcz3=atoi(DANE_BLE);  EEPROM_WRITE_INT(210,&czcz3);
-      	  }
-      if(wynik==43) {
-    	  czcz4=atoi(DANE_BLE);  EEPROM_WRITE_INT(215,&czcz4);
-      	  }
-      if(wynik==44) {
-    	  czcz5=atoi(DANE_BLE);  EEPROM_WRITE_INT(220,&czcz5);
-      	  }
-      	  if(wynik==45) {
-    	  	  czcz6=atoi(DANE_BLE);  EEPROM_WRITE_INT(225,&czcz6);
-      	  }
-      if(wynik==46) {
-    	  czcz7=atoi(DANE_BLE);  EEPROM_WRITE_INT(230,&czcz7);
-      }
-        if(wynik==47) {
-        	czcz8=atoi(DANE_BLE);  EEPROM_WRITE_INT(235,&czcz8);
-        }
+					if(wynik==40) {
+						czcz1=atoi(DANE_BLE);  EEPROM_WRITE_INT(265,&czcz1); //adres 200 uszkodzony? tak
+						}
+					  if(wynik==41) {
+						  czcz2=atoi(DANE_BLE);  EEPROM_WRITE_INT(245,&czcz2); //adres 205 uszkodzony? tak nwm o co kmn anyway
+						  }
+					  if(wynik==42) {
+						  czcz3=atoi(DANE_BLE);  EEPROM_WRITE_INT(210,&czcz3);
+						  }
+					  if(wynik==43) {
+						  czcz4=atoi(DANE_BLE);  EEPROM_WRITE_INT(215,&czcz4);
+						  }
+					  if(wynik==44) {
+						  czcz5=atoi(DANE_BLE);  EEPROM_WRITE_INT(220,&czcz5);
+						  }
+						  if(wynik==45) {
+							  czcz6=atoi(DANE_BLE);  EEPROM_WRITE_INT(225,&czcz6);
+						  }
+					  if(wynik==46) {
+						  czcz7=atoi(DANE_BLE);  EEPROM_WRITE_INT(230,&czcz7);
+					  }
+						if(wynik==47) {
+							czcz8=atoi(DANE_BLE);  EEPROM_WRITE_INT(235,&czcz8);
+						}
 
 
 
@@ -522,41 +522,41 @@ void PRZYPISYWANIEWARTOSCI()
         //@@@@@@@@@@@@@@@
 //Z Ekranu "ZAAW"
 
-    if(wynik==30) {
-    	MAX_PID=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(400,&MAX_PID);
+				if(wynik==30) {
+					MAX_PID=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(400,&MAX_PID);
 
-  }
-      if(wynik==131) {
-    pr_tyl=atoi(DANE_BLE);  EEPROM_WRITE_INT(405,&pr_tyl);
+			  }
+				  if(wynik==131) {
+				pr_tyl=atoi(DANE_BLE);  EEPROM_WRITE_INT(405,&pr_tyl);
 
-  }
-      if(wynik==32) {
-    	  SUMA_MAX=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(410,&SUMA_MAX);
+			  }
+				  if(wynik==32) {
+					  SUMA_MAX=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(410,&SUMA_MAX);
 
-  }
-      if(wynik==33) {
-    CzasProbkowania_CZ_Rozniczkujacego=atoi(DANE_BLE);
+			  }
+				  if(wynik==33) {
+				CzasProbkowania_CZ_Rozniczkujacego=atoi(DANE_BLE);
 
-   EEPROM_WRITE_INT(420,&CzasProbkowania_CZ_Rozniczkujacego);
+			   EEPROM_WRITE_INT(420,&CzasProbkowania_CZ_Rozniczkujacego);
 
-  }
+			  }
 
-      if(wynik==134) { //test silnika wl
-    	  T_SIL=1;
-  }
-      if(wynik==135) { //tesy silnika wyl
-    	  T_SIL=0;
-  }
+				  if(wynik==134) { //test silnika wl
+					  T_SIL=1;
+			  }
+				  if(wynik==135) { //tesy silnika wyl
+					  T_SIL=0;
+			  }
 
-      if(wynik==36) {
-     	  ZMIENNA3=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(440,&ZMIENNA3);
+				  if(wynik==36) {
+					  ZMIENNA3=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(440,&ZMIENNA3);
 
-   }
+			   }
 
-      if(wynik==37) {
-    	  ZMIENNA4=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(445,&ZMIENNA4);
-    	  HAL_NVIC_SystemReset();
-  }
+				  if(wynik==37) {
+					  ZMIENNA4=atof(DANE_BLE);  EEPROM_WRITE_FLOAT(445,&ZMIENNA4);
+					  HAL_NVIC_SystemReset();
+			  }
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ IR STATE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
       if(wynik==38) {
@@ -567,12 +567,8 @@ void PRZYPISYWANIEWARTOSCI()
 
         if(wynik==39) {
         	LED_BLINK=atoi(DANE_BLE);;  EEPROM_WRITE_INT(455,&LED_BLINK);
-
       }
-
   //@@@@@@@@@@@@@@@@
-
-
 }
 
 

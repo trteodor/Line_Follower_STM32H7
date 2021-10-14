@@ -5,6 +5,7 @@
 #include "usart.h"
 #include "gpio.h"
 
+#include "LF_AppMain.h"
 #include "TSOP2236_T.h"
 #include "LineSensorsModule.h"
 
@@ -15,12 +16,12 @@ void IR_DataRead();
 
 
 
-void AppMainJobsConfig(void)
+void LF_App_MainConfig(void)
 {
 	SensorModuleInit();
 }
 
-void App_main_jobs(void)
+void LF_App_MainTask(void)
 {
 	HM10BLE_Init();
 	SensorsCalculateError();

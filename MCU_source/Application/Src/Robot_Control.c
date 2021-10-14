@@ -15,6 +15,80 @@
 //
 //
 //
+//void ProfilPredkosci()
+//{
+////	P_trasaA();
+////	P_trasaB();
+//
+//}
+//void P_trasaA()
+//{
+//	if(ZMIENNA3==1) //trasa A
+//	{
+//	if(P_DRSR>0)
+//	{
+//		pr_pocz_silnikow=2.0;
+//	}
+//
+//	if(P_DRSR>0.2)
+//	{
+//	pr_pocz_silnikow=1.7;
+//	}
+//	if(P_DRSR>1.1)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>2.3)
+//	{
+//	pr_pocz_silnikow=1.7;
+//	}
+//	if(P_DRSR>3.8)
+//	{
+//	pr_pocz_silnikow=2.0;
+//	}
+//	}
+//}
+//void P_trasaB()
+//{
+//	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
+//	if(ZMIENNA3==2) //trasa B
+//	{
+//	if(P_DRSR>0)
+//	{
+//		pr_pocz_silnikow=1.5;
+//	}
+//	if(P_DRSR>0.1)
+//	{
+//	pr_pocz_silnikow=2.5;
+//	}
+//
+//	if(P_DRSR>0.8)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>1)
+//	{
+//	pr_pocz_silnikow=2.5;
+//	}
+//	if(P_DRSR>1.3)
+//	{
+//	pr_pocz_silnikow=1.5;
+//	}
+//	if(P_DRSR>3.1)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>3.6)
+//	{
+//	pr_pocz_silnikow=2.3;
+//	}
+//	if(P_DRSR>3.9)
+//	{
+//	pr_pocz_silnikow=2.4;
+//	}
+//	}
+//}
+//
 //void Decode_PID();
 //
 //void Robot_Control()

@@ -9,7 +9,7 @@
 #include "main.h"
 
 /*Realization is awful but work ;) */
-
+/* I know how do it better now, but it required time...*/
 
 typedef enum
 {

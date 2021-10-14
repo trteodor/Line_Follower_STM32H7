@@ -30,8 +30,8 @@ void OBSLUGAPILOTA();
 
 void IR_INIT()
 {
-	 HAL_TIM_Base_Start_IT(&htim2); //Turn on Timer
-	 EEPROM_IR_STATE_READ();            //--<< Set it in Bluetooth APP
+//	 HAL_TIM_Base_Start_IT(&htim2); //Turn on Timer
+//	 EEPROM_IR_STATE_READ();            //--<< Set it in Bluetooth APP
 	// IR_READY=1;
 }
 

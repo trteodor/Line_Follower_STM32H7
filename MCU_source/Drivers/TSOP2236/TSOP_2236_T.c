@@ -17,7 +17,7 @@
 *  5. Read the Received data with function "RC5_ReadNormal" -- RC5_ReadNormal(&RC5Device,&RC5_RecDat)
 */
 #include <stdlib.h>
-#include <TSOP2236_T.h>
+#include "TSOP2236_T.h"
 
 
 uint32_t RC5_Time=0;

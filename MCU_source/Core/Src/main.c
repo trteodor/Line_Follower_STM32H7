@@ -29,16 +29,20 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "AppMainJobs.h"
+#include "HM10_BleModule.h"
+
+
+
 
 #include <stdio.h>
-#include "CZUJNIKI.h"
-#include "R_PID.h"
+//#include "CZUJNIKI.h"
+//#include "R_PID.h"
 #include "EEPROM.h"
-#include "BLE_PC_CON.h"
-#include "Komendy_BLE.h"
+//#include "Komendy_BLE.h"
 #include "Robot_Control.h"
-#include <TSOP2236_new_T.h>
-#include "ENKODERY.h"
+//#include <TSOP2236_new_T.h>
+//#include "ENKODERY.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -149,12 +153,20 @@ int main(void)
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
 
-  EEPROM_LED_BLINK_READ(); //defined in this file above
-  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
-  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
-  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
-  BLE_INIT(); //Init the BLE Module, reference to file "BLE_PC_CON.c"
-  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
+  //Activate 100usTimer
+  LL_TIM_EnableIT_CC1(TIM2);
+  LL_TIM_EnableCounter(TIM2);
+
+
+  AppMainJobsConfig();
+
+
+//  EEPROM_LED_BLINK_READ(); //defined in this file above
+//  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
+//  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
+//  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
+////  BLE_INIT(); //Init the BLE Module, reference to file "BLE_PC_CON.c"
+//  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
 
 
 	/*float CZ_B1,CZ_B2,CZ_B3;
@@ -166,6 +178,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  App_main_jobs();
 
 		/*  if(l==0)
 		  {
@@ -176,19 +189,19 @@ int main(void)
 
 	 // zrob_charakterystki_siln();
 
-	  oblicz_predkosc();
-	  mierzprzebdr();
-
-	  ProfilPredkosci();
-
-	  OBLICZ_BLAD(); //reference to file "CZUJNIKI.c"
-	  calculatePID(); //reference to file "R_PID.c"
-	  Robot_Control(); //reference to file "Robot_Control.c"
-	  DANE_DO_APLIKACJI_MOBILNEJ(); ////reference to file "Komendy_BLE.h"
-	  LED_BLINKING(); //defined in this file below
-	  IR_READER();
-
-	 wykryj_znacznik();
+//	  oblicz_predkosc();
+//	  mierzprzebdr();
+//
+//	  ProfilPredkosci();
+//
+//	  OBLICZ_BLAD(); //reference to file "CZUJNIKI.c"
+//	  calculatePID(); //reference to file "R_PID.c"
+//	  Robot_Control(); //reference to file "Robot_Control.c"
+//	  DANE_DO_APLIKACJI_MOBILNEJ(); ////reference to file "Komendy_BLE.h"
+//	  LED_BLINKING(); //defined in this file below
+//	  IR_READER();
+//
+//	 wykryj_znacznik();
 	// pomiardoble();
 
 /*		  l++;
@@ -292,6 +305,26 @@ void PeriphCommonClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+	// Check if UART2 trigger the Callback
+	if(huart->Instance == USART2)
+	{
+		// Start to listening again
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, ReceiveBuffer, ReceiveBufferSize);
+		HM10BLE_RxEventCallback(Size);
+	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	// Check if UART2 triggered the Callback
+	if(huart->Instance == USART2)
+	{
+		HM10BLE_TxCmpltEventCallback();
+	}
+}
+
 /*
 void zrob_charakterystki_siln()
 {
@@ -334,78 +367,78 @@ void zrob_charakterystki_siln()
 
 */
 
-void P_trasaA()
-{
-	if(ZMIENNA3==1) //trasa A
-	{
-	if(P_DRSR>0)
-	{
-		pr_pocz_silnikow=2.0;
-	}
-
-	if(P_DRSR>0.2)
-	{
-	pr_pocz_silnikow=1.7;
-	}
-	if(P_DRSR>1.1)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>2.3)
-	{
-	pr_pocz_silnikow=1.7;
-	}
-	if(P_DRSR>3.8)
-	{
-	pr_pocz_silnikow=2.0;
-	}
-	}
-}
-void P_trasaB()
-{
-	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
-	if(ZMIENNA3==2) //trasa B
-	{
-	if(P_DRSR>0)
-	{
-		pr_pocz_silnikow=1.5;
-	}
-	if(P_DRSR>0.1)
-	{
-	pr_pocz_silnikow=2.5;
-	}
-
-	if(P_DRSR>0.8)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>1)
-	{
-	pr_pocz_silnikow=2.5;
-	}
-	if(P_DRSR>1.3)
-	{
-	pr_pocz_silnikow=1.5;
-	}
-	if(P_DRSR>3.1)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>3.6)
-	{
-	pr_pocz_silnikow=2.3;
-	}
-	if(P_DRSR>3.9)
-	{
-	pr_pocz_silnikow=2.4;
-	}
-	}
-}
+//void P_trasaA()
+//{
+//	if(ZMIENNA3==1) //trasa A
+//	{
+//	if(P_DRSR>0)
+//	{
+//		pr_pocz_silnikow=2.0;
+//	}
+//
+//	if(P_DRSR>0.2)
+//	{
+//	pr_pocz_silnikow=1.7;
+//	}
+//	if(P_DRSR>1.1)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>2.3)
+//	{
+//	pr_pocz_silnikow=1.7;
+//	}
+//	if(P_DRSR>3.8)
+//	{
+//	pr_pocz_silnikow=2.0;
+//	}
+//	}
+//}
+//void P_trasaB()
+//{
+//	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
+//	if(ZMIENNA3==2) //trasa B
+//	{
+//	if(P_DRSR>0)
+//	{
+//		pr_pocz_silnikow=1.5;
+//	}
+//	if(P_DRSR>0.1)
+//	{
+//	pr_pocz_silnikow=2.5;
+//	}
+//
+//	if(P_DRSR>0.8)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>1)
+//	{
+//	pr_pocz_silnikow=2.5;
+//	}
+//	if(P_DRSR>1.3)
+//	{
+//	pr_pocz_silnikow=1.5;
+//	}
+//	if(P_DRSR>3.1)
+//	{
+//	pr_pocz_silnikow=2.2;
+//	}
+//	if(P_DRSR>3.6)
+//	{
+//	pr_pocz_silnikow=2.3;
+//	}
+//	if(P_DRSR>3.9)
+//	{
+//	pr_pocz_silnikow=2.4;
+//	}
+//	}
+//}
 
 void ProfilPredkosci()
 {
-	P_trasaA();
-	P_trasaB();
+//	P_trasaA();
+//	P_trasaB();
 
 	/*if(ZMIENNA3==3) //trasa B , PWM
 	{

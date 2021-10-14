@@ -23,6 +23,7 @@
 #define EEPROM_ErrW7_Addr 105
 #define EEPROM_ErrW_Max_Addr 115
 
+
 #define EEPROM_S1_LineIsDetV_Addr 265
 #define EEPROM_S2_LineIsDetV_Addr 245
 #define EEPROM_S3_LineIsDetV_Addr 210

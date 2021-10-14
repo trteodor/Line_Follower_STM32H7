@@ -21,7 +21,6 @@
 
 #include <stm32h7xx_it.h>
 #include "Komendy_BLE.h"
-#include "BLE_PC_CON.h"
 #include "EEPROM.h"
 #include "R_PID.h"
 #include "Czujniki.h"

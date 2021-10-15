@@ -13,4 +13,5 @@ Some of the most important items or items not shown in the altium schematics:
 * https://botland.com.pl/moduly-bluetooth/9515-modul-bluetooth-40-ble-hm-10-at-09-mlt-bt05-33v5v-5904422313524.html
 * https://sklep.avt.pl/modul-bms-pcm-pcb-ladowania-i-ochrony-ogniw-li-ion-1s-3-7v-3a-do-ogniw-18650.html
 * https://botland.com.pl/akumulatory-li-pol-2s-74v-/8973-pakiet-li-pol-dualsky-250mah-30c-2s-74v-eco-s-6941047104631.html or
-* https://botland.com.pl/akumulatory-li-pol-2s-74v-/8248-pakiet-li-pol-dualsky-150mah-30c-2s-74v-eco-s-6941047106321.html
+* https://botland.com.pl/akumulatory-li-pol-2s-74v-/8248-pakiet-li-pol-dualsky-150mah-30c-2s-74v-eco-s-6941047106321.html or
+* https://botland.com.pl/akumulatory-li-pol-2s-74v-/2019-pakiet-li-pol-dualsky-400mah-30c-2s-74v-6941047104853.html (don't remember now but probably 250mA)

@@ -89,6 +89,8 @@
 //	}
 //}
 //
+
+
 //void Decode_PID();
 //
 //void Robot_Control()
@@ -136,5 +138,118 @@
 //
 //	JAZDA_DO_PRZODU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
 //}
+
+//float rz_predkoscfb()
+//{
+//	 float pr_zadana=pr_pocz_silnikow;
+//
+//	 float PR_zP;
+//	 float PR_zL;
+//
+//	 	 PR_zL=pr_zadana+PID_value;
+//	 	 PR_zP=pr_zadana-PID_value;
+//
+//
+//
+//		 if(PR_zP>Predkosc_P)
+//		 {
+//			 float delta_pr=PR_zP-Predkosc_P;
+//			 PR_zP=PR_zP+(delta_pr);
+//		 }
+//
+//		 if(PR_zP<Predkosc_P)
+//		 {
+//			 float delta_pr=PR_zP-Predkosc_P;
+//			 PR_zP=PR_zP+(delta_pr);
+//		 }
+//
+//
+//
+//
+//		 if(PR_zL>Predkosc_L)
+//		 {
+//			 float delta_pr=PR_zL-Predkosc_L;
+//			 PR_zL=PR_zL+(delta_pr);
+//		 }
+//
+//		 if(PR_zL<Predkosc_L)
+//		 {
+//			 float delta_pr=PR_zL-Predkosc_L;
+//			 PR_zL=PR_zL+(delta_pr);
+//		 }
+//
+//			 PR_zP= (220*PR_zP)+50 - (220*PID_value);
+//			 PR_zL= (220*PR_zL)+50 + (220*PID_value);
+//
+// Pr_Silnika_Lewego  = PR_zL;
+// Pr_Silnika_Prawego = PR_zP;
+//
+//
+//return 0;
+//}
+
+//void JAZDA_DO_PRZODU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+//{
+//
+//  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue);//-->> Naprzod
+//  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
+//
+//  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
+//  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+//
+//}
+//void PRAWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+//{
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr);
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);  //-->> Do tylu
+//
+//
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+//
+//
+//
+//}
+//void LEWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+//{
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue); //-->> Do tylu
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
+//
+//
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue);
+//
+//
+//
+//}
+//void JAZDA_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+//{
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr); //-->> Do tylu
+//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);
+//
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew);
+//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue); //-->> Do tylu
+//
+//}
+//
+//void Motor_PWM_Init()
+//{
+//	EEPROM_PID_READ();
+//	EEPROM_ZAAW_READ();
+//    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+//    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_2);
+//
+//    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+//    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+//
+//
+//
+//    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,0);
+//    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,0);
+//
+//    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,0);
+//    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,0);
+//}
+
 //
 //#endif /* SRC_URUCHAMIANIE_C_ */

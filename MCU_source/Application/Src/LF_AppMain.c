@@ -22,12 +22,15 @@ void LF_App_MainConfig(void)
 	//	RC5100usTimer Called from stm32h7xx_it.c file
 	//	RC5_IR_EXTI_GPIO_ReceiveAndDecodeFunction Called from stm32h7xx_it.c file
 	SensorModuleInit();
+	PID_Init();
 	HM10BLE_Init();
 }
 
 void LF_App_MainTask(void)
 {
 	SensorsCalculateError();
+	PID_Task();
+	HM10Ble_Task();
 //	IR_DataRead();
 }
 

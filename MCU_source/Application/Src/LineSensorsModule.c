@@ -7,6 +7,7 @@
 #include "EEPROM_VarLocDef.h"
 
 SensorModule_t SensorModule;
+/*Few field of the structure above are also modified by HM10Ble App Module*/
 
 void Read_SensorsValue_From_EEPROM();
 
@@ -22,64 +23,64 @@ float SensorsCalculateError()
 
 	if(SensorModule.SensorADCValues[3] > SensorModule.LineDetectValue[3]
 			&& SensorModule.SensorADCValues[4] > SensorModule.LineDetectValue[4]){
-		SensorModule.ERR_CZ=0;  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=0;  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[0] > SensorModule.LineDetectValue[0]
 			&& SensorModule.SensorADCValues[1] > SensorModule.LineDetectValue[1]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[5];  OST_KIER_BL=1;	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[5];  OST_KIER_BL=1;	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[1] > SensorModule.LineDetectValue[1]
 			&& SensorModule.SensorADCValues[2] > SensorModule.LineDetectValue[2]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[3];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[3];  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[2] > SensorModule.LineDetectValue[2]
 			&& SensorModule.SensorADCValues[3] > SensorModule.LineDetectValue[3]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[1];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[1];  	return SensorModule.PositionErrorValue;
 	}
 
 	if(SensorModule.SensorADCValues[7] > SensorModule.LineDetectValue[7]
 			&& SensorModule.SensorADCValues[6] > SensorModule.LineDetectValue[6]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[5]; OST_KIER_BL=-1; 	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[5]; OST_KIER_BL=-1; 	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[6] > SensorModule.LineDetectValue[6]
 			&& SensorModule.SensorADCValues[5] > SensorModule.LineDetectValue[5]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[3]; 	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[3]; 	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[5] > SensorModule.LineDetectValue[5]
 			&& SensorModule.SensorADCValues[4] > SensorModule.LineDetectValue[4]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[1];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[1];  	return SensorModule.PositionErrorValue;
 	}
 
 
 	if(SensorModule.SensorADCValues[0] > SensorModule.LineDetectValue[0]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[6];   OST_KIER_BL=1; 	 return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[6];   OST_KIER_BL=1; 	 return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[1] > SensorModule.LineDetectValue[1]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[4];     return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[4];     return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[2] > SensorModule.LineDetectValue[2]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[2];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[2];  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[3] > SensorModule.LineDetectValue[3]){
-		SensorModule.ERR_CZ=SensorModule.SensorErrorValue[0];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=SensorModule.SensorErrorValue[0];  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[4] > SensorModule.LineDetectValue[4]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[0];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[0];  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[5] > SensorModule.LineDetectValue[5]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[2];  	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[2];  	return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[6] > SensorModule.LineDetectValue[6]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[4];    return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[4];    return SensorModule.PositionErrorValue;
 	}
 	if(SensorModule.SensorADCValues[7] > SensorModule.LineDetectValue[7]){
-		SensorModule.ERR_CZ=-SensorModule.SensorErrorValue[6];  OST_KIER_BL=-1;	return SensorModule.ERR_CZ;
+		SensorModule.PositionErrorValue=-SensorModule.SensorErrorValue[6];  OST_KIER_BL=-1;	return SensorModule.PositionErrorValue;
 	}
 
-	if (OST_KIER_BL==-1 )  {  SensorModule.ERR_CZ=-SensorModule.SensorErrorMaxValue; 	return SensorModule.ERR_CZ; }
-	if (OST_KIER_BL==1  )  {  SensorModule.ERR_CZ=SensorModule.SensorErrorMaxValue;  	return SensorModule.ERR_CZ; }
+	if (OST_KIER_BL==-1 )  {  SensorModule.PositionErrorValue=-SensorModule.SensorErrorMaxValue; 	return SensorModule.PositionErrorValue; }
+	if (OST_KIER_BL==1  )  {  SensorModule.PositionErrorValue=SensorModule.SensorErrorMaxValue;  	return SensorModule.PositionErrorValue; }
 
-	//ERR_CZ=99; //Function Error
+	//PositionErrorValue=99; //Function Error
 	return 0;
 }
 

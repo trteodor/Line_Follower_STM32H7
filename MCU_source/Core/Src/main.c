@@ -158,7 +158,7 @@ int main(void)
   //  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
 
 
- // LF_App_MainConfig();
+  LF_App_MainConfig();
 
 
 //  EEPROM_LED_BLINK_READ(); //defined in this file above
@@ -178,7 +178,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	//  LF_App_MainTask();
+	  LF_App_MainTask();
 
 	 // zrob_charakterystki_siln();
 
@@ -287,7 +287,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	if(huart->Instance == USART2)
 	{
 		// Start listening again
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, ReceiveBuffer, ReceiveBufferSize);
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, HM10BLE_App.ReceiveBuffer, ReceiveBufferSize);
 		HM10BLE_RxEventCallback(Size);
 	}
 }

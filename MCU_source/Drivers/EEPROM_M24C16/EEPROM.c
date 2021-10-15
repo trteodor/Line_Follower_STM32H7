@@ -22,7 +22,9 @@ union TO_EEPROM {
 int8_t EEPROM_WRITE(uint16_t MemAdr, uint8_t *regData , uint16_t len)
 {
 	// HAL_I2C_Mem_Write(hi2c, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout)
+	HAL_I2C_Init(&hi2c1);
 	HAL_I2C_Mem_Write(&hi2c1, Sektor1, MemAdr, 1, regData, len, 1);
+	HAL_I2C_DeInit(&hi2c1);
 	return 0;
 }
 
@@ -85,7 +87,7 @@ int EEPROM_WRITE_INT(uint16_t MemAdr, int *regData)  //Float value is 16bit so n
 int EEPROM_READ_INT(uint16_t MemAdr,int *regData)
 {
 	//Is Need some delay beetween evry read
-	HAL_Delay(2);
+	HAL_Delay(2); //?? :/
 
 	  union TO_EEPROM {
 	      uint8_t in8bit [4];

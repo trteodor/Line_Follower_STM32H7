@@ -17,8 +17,8 @@ typedef enum
 	DrivingStartCommand = 'I',
 	DrivingStopCommand = 'U',
 	/* @@@@@ @@@@ "Basic" Screen in Mobile App */
-	StartPIDScanning =  'P',
-	StopPIDScanning = 'O',
+	StartSendActualPID_AndCalcMotor_Data =  'P',
+	StopSendActualPID_AndCalcMotor_Data = 'O',
 	SendActualPidSettings = '>',
 	SetPid_Kp = '+',
 	SetPid_Kd = '-',
@@ -74,27 +74,27 @@ typedef enum
 
 #define PID_KpComm "l"
 #define PID_KdComm "k"
-#define BaseMotorSpeed "m"
+#define BaseMotorSpeed_d "m"
 #define PID_KdProbeTime_d "w"
 
 /* Send Error Weights for each sensor to mobile App commands*/
-#define S_LineErWToM_App_1 '*'
-#define S_LineErWToM_App_2 '&'
-#define S_LineErWToM_App_3 '^'
+#define S_LineErWToM_App_1 "*"
+#define S_LineErWToM_App_2 "&"
+#define S_LineErWToM_App_3 "^"
 #define S_LineErWToM_App_4 "_"
-#define S_LineErWToM_App_5 '$'
-#define S_LineErWToM_App_6 '#'
-#define S_LineErWToM_App_7 '@'
-#define S_LineErWToM_App_Max '!'
+#define S_LineErWToM_App_5 "$"
+#define S_LineErWToM_App_6 "#"
+#define S_LineErWToM_App_7 "@"
+#define S_LineErWToM_App_Max "!"
 /* Send actual value when the line is detected to mobile App*/
 #define S_Line_1_DetectValueToMobileAPP "§"
-#define S_Line_2_DetectValueToMobileAPP 'H'
-#define S_Line_3_DetectValueToMobileAPP 'Q'
-#define S_Line_4_DetectValueToMobileAPP 'W'
-#define S_Line_5_DetectValueToMobileAPP '?'
-#define S_Line_6_DetectValueToMobileAPP 'L'
-#define S_Line_7_DetectValueToMobileAPP 'T'
-#define S_Line_8_DetectValueToMobileAPP 'Y'
+#define S_Line_2_DetectValueToMobileAPP "H"
+#define S_Line_3_DetectValueToMobileAPP "Q"
+#define S_Line_4_DetectValueToMobileAPP "W"
+#define S_Line_5_DetectValueToMobileAPP "?"
+#define S_Line_6_DetectValueToMobileAPP "L"
+#define S_Line_7_DetectValueToMobileAPP "T"
+#define S_Line_8_DetectValueToMobileAPP "Y"
 /* Actual line sensor data value*/
 #define S_Line_1_Data_ToM_App_Comm "CZ1:"
 #define S_Line_2_Data_ToM_App_Comm "CZ2:"
@@ -106,16 +106,18 @@ typedef enum
 #define S_Line_8_Data_ToM_App_Comm "CZ8:"
 #define ActualPositionError_SS "ERROR:"
 
+
+
 /*@@@@@ @@@@  Mobile App Screen "Adv" (same as commands)*/
-#define MAX_Pid_Value_d 'g',
-#define ReverseSpeed_d 'h',
-#define MaxSumValue_forPidKi_d 'q',
-#define PID_KdProbeTime_dd 'w',
-#define Motor1TestStart_d 'e',
-#define Motor1TestStop_d '`',
-#define Reserv3_d 't',
-#define Reserv4_d 'y',
-#define IrSensor_d 'j', //?
-#define LedMode_d 'J', //?
+#define MAX_Pid_Value_d "g"
+#define ReverseSpeed_d "h"
+#define MaxSumValue_forPidKi_d "q"
+#define PID_KdProbeTime_dd "w"
+#define Motor1TestStart_d "e"
+#define Motor1TestStop_d "`"
+#define Reserv3_d "t"
+#define Reserv4_d "y"
+#define IrSensor_d "j" //?
+#define LedMode_d "J" //?
 
 #endif /* HM10Commands_H_ */

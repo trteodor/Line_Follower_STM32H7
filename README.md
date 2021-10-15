@@ -1,7 +1,7 @@
 # FAST_Line_Follower_STM32H7
 Hi!
 This repository contains all data for my first serious microcontroller project. Link to the demo video: 
-**_ https://youtu.be/MG3MgTwvwnU _**
+_** https://youtu.be/MG3MgTwvwnU **_
 I speak in Polish league on the video.
 * I am not satisfied with the quality of this code. This project is my first approach to programming and microcontrollers ....
 

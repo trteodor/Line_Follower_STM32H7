@@ -18,3 +18,5 @@ I speak in Polish league on the video.
 # Acknowledge sources :
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Jedrzej_Stolarz_praca_inzynierska.pdf
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Witek_Lipieta_praca_magisterska.pdf
+
+**_If you have question please open issue to this repository, or write comment under video on youtube._**

@@ -16,6 +16,7 @@ I speak in Polish league on the video.
 ![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/NaTorze.PNG)
 
 # Acknowledge sources :
+* https://forbot.pl/blog/algorytm-linefollowera-c-poczatkujacych-id2722
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Jedrzej_Stolarz_praca_inzynierska.pdf
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Witek_Lipieta_praca_magisterska.pdf
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Rafal_Cyminski_praca_magisterska.pdf

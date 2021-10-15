@@ -3,7 +3,7 @@ Hi!
 This repository contains all data for my first serious microcontroller project. 
 
 Link to the demo video: 
-**_https://youtu.be/MG3MgTwvwnU_**
+* **_https://youtu.be/MG3MgTwvwnU_**
 
 I speak in Polish league on the video.
 * I am not satisfied with the quality of this code. This project is my first approach to programming and microcontrollers ....

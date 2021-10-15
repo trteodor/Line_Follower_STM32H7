@@ -29,16 +29,19 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "HM10_BleModule.h"
+#include "LF_AppMain.h"
+
+
 
 #include <stdio.h>
-#include "CZUJNIKI.h"
-#include "R_PID.h"
+//#include "CZUJNIKI.h"
+//#include "R_PID.h"
 #include "EEPROM.h"
-#include "BLE_PC_CON.h"
-#include "Komendy_BLE.h"
+//#include "Komendy_BLE.h"
 #include "Robot_Control.h"
-#include <TSOP2236_new_T.h>
-#include "ENKODERY.h"
+//#include <TSOP2236_new_T.h>
+//#include "ENKODERY.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -148,13 +151,22 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
+  //Activate 100usTimer
+  LL_TIM_EnableIT_CC1(TIM2);
+  LL_TIM_EnableCounter(TIM2);
+  //just for information (it is set by default in CubeMX
+  //  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
 
-  EEPROM_LED_BLINK_READ(); //defined in this file above
-  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
-  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
-  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
-  BLE_INIT(); //Init the BLE Module, reference to file "BLE_PC_CON.c"
-  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
+
+  LF_App_MainConfig();
+
+
+//  EEPROM_LED_BLINK_READ(); //defined in this file above
+//  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
+//  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
+//  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
+
+
 
 
 	/*float CZ_B1,CZ_B2,CZ_B3;
@@ -166,47 +178,24 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-		/*  if(l==0)
-		  {
-		  CZ_B1=t2;
-		  }*/
-
-		  //Sredni czas podczas wysylania danych do apki telefonu to okolo 40us jednak maxy napewno sa inne...
+	  LF_App_MainTask();
 
 	 // zrob_charakterystki_siln();
 
-	  oblicz_predkosc();
-	  mierzprzebdr();
-
-	  ProfilPredkosci();
-
-	  OBLICZ_BLAD(); //reference to file "CZUJNIKI.c"
-	  calculatePID(); //reference to file "R_PID.c"
-	  Robot_Control(); //reference to file "Robot_Control.c"
-	  DANE_DO_APLIKACJI_MOBILNEJ(); ////reference to file "Komendy_BLE.h"
-	  LED_BLINKING(); //defined in this file below
-	  IR_READER();
-
-	 wykryj_znacznik();
+//	  oblicz_predkosc();
+//	  mierzprzebdr();
+//
+//	  ProfilPredkosci();
+//
+//	  OBLICZ_BLAD(); //reference to file "CZUJNIKI.c"
+//	  calculatePID(); //reference to file "R_PID.c"
+//	  Robot_Control(); //reference to file "Robot_Control.c"
+//	  DANE_DO_APLIKACJI_MOBILNEJ(); ////reference to file "Komendy_BLE.h"
+//	  LED_BLINKING(); //defined in this file below
+//	  IR_READER();
+//
+//	 wykryj_znacznik();
 	// pomiardoble();
-
-/*		  l++;
-			  if(l>=10000)
-			  {
-				  CZ_B2=t2;
-
-				  //co 100us sie dodaje t2 //testowalem tez na HAL_GetTick to samo wychodzi tylko wtedy 1k zamiast 10k
-				  CZ_B3 = ( ( (CZ_B2-CZ_B1)/10000 )/ 10000) *1000000 ;
-				  CZ_B1=0;
-				  CZ_B2=0;
-				  char HH[50]={0};
-				  sprintf(HH,"CZAS:%f uS \n\r",CZ_B3);
-				 // sprintf(HH,"CZAS: %ul  \n\r", CZ_B3);
-				 // HAL_Delay(10);
-				  DO_BLE(HH);
-				  l=0;
-			  }*/
 
     /* USER CODE END WHILE */
 
@@ -292,155 +281,28 @@ void PeriphCommonClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-/*
-void zrob_charakterystki_siln()
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
-
-	if(URUCHAMIANIE_ROBOTA)
+	// Check if UART2 trigger the Callback
+	if(huart->Instance == USART2)
 	{
-		pr_pocz_silnikow=0;
-
-		if(zapCzaspPWM+3000 < HAL_GetTick() )
-		{
-			zapCzaspPWM=HAL_GetTick();
-
-			if(zm_pPWM==0)
-			{
-			    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,valueofpwm);
-			    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,valueofpwm);
-			}
-			if(zm_pPWM<21)
-			{
-				zm_pPWM++;
-				valueofpwm=valueofpwm-50;
-				 __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,valueofpwm);
-				bufor_zpomiar_prpwm[zm_pPWM]=Predkosc_L;
-				char napisPWM[40];
-				sprintf(napisPWM,"%d,%f\n\r",valueofpwm,   bufor_zpomiar_prpwm[zm_pPWM] );
-								DO_BLE(napisPWM);
-			}
-			if(zm_pPWM==21)
-			{
-				valueofpwm=1000;
-			}
-
-
-
-			}
-
-		}
-}
-
-
-*/
-
-void P_trasaA()
-{
-	if(ZMIENNA3==1) //trasa A
-	{
-	if(P_DRSR>0)
-	{
-		pr_pocz_silnikow=2.0;
-	}
-
-	if(P_DRSR>0.2)
-	{
-	pr_pocz_silnikow=1.7;
-	}
-	if(P_DRSR>1.1)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>2.3)
-	{
-	pr_pocz_silnikow=1.7;
-	}
-	if(P_DRSR>3.8)
-	{
-	pr_pocz_silnikow=2.0;
-	}
-	}
-}
-void P_trasaB()
-{
-	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
-	if(ZMIENNA3==2) //trasa B
-	{
-	if(P_DRSR>0)
-	{
-		pr_pocz_silnikow=1.5;
-	}
-	if(P_DRSR>0.1)
-	{
-	pr_pocz_silnikow=2.5;
-	}
-
-	if(P_DRSR>0.8)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>1)
-	{
-	pr_pocz_silnikow=2.5;
-	}
-	if(P_DRSR>1.3)
-	{
-	pr_pocz_silnikow=1.5;
-	}
-	if(P_DRSR>3.1)
-	{
-	pr_pocz_silnikow=2.2;
-	}
-	if(P_DRSR>3.6)
-	{
-	pr_pocz_silnikow=2.3;
-	}
-	if(P_DRSR>3.9)
-	{
-	pr_pocz_silnikow=2.4;
-	}
+		// Start listening again
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, ReceiveBuffer, ReceiveBufferSize);
+		HM10BLE_RxEventCallback(Size);
 	}
 }
 
-void ProfilPredkosci()
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
-	P_trasaA();
-	P_trasaB();
-
-	/*if(ZMIENNA3==3) //trasa B , PWM
+	// Check if UART2 triggered the Callback
+	if(huart->Instance == USART2)
 	{
-	if(P_DRSR>0)
-	{
-		pr_pocz_silnikow=650;
+		HM10BLE_TxCmpltEventCallback();
 	}
-
-	if(P_DRSR>0.8)
-	{
-	pr_pocz_silnikow=450;
-	}
-	if(P_DRSR>1)
-	{
-	pr_pocz_silnikow=500;
-	}
-	if(P_DRSR>1.3)
-	{
-	pr_pocz_silnikow=340;
-	}
-	if(P_DRSR>3.1)
-	{
-	pr_pocz_silnikow=600;
-	}
-	if(P_DRSR>3.4)
-	{
-	pr_pocz_silnikow=400;
-	}
-	if(P_DRSR>3.8)
-	{
-	pr_pocz_silnikow=600;
-	}
-	}
-*/
 }
+
+
+
 
 
 void LED_BLINKING()
@@ -458,21 +320,21 @@ void LED_BLINKING()
 
 	  if(LED_Helper)
 		  {
-			 // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
-					//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
-					  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
-					  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
-					  LED_Helper=0;
+		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
+			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
+			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
+			  LED_Helper=0;
 		  }
 
 
 	  else
 	  {
-		//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
-		//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
-		  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
-		  LED_Helper=1;
+			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
+			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
+			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
+			  LED_Helper=1;
 	  }
 		  zapCzas= HAL_GetTick();
 		  		  zapCzas=aktCzas;

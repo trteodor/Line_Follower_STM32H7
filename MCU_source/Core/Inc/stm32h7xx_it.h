@@ -33,15 +33,12 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
- extern void IR_IT_Decode();
- extern void IR_IT_Dec();
-	  extern volatile uint32_t t2;
-	  extern volatile uint32_t t12;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+extern volatile uint32_t  us100Timer;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -63,6 +60,8 @@ void EXTI2_IRQHandler(void);
 void EXTI3_IRQHandler(void);
 void EXTI4_IRQHandler(void);
 void DMA1_Stream0_IRQHandler(void);
+void DMA1_Stream1_IRQHandler(void);
+void DMA1_Stream2_IRQHandler(void);
 void EXTI9_5_IRQHandler(void);
 void TIM2_IRQHandler(void);
 void USART2_IRQHandler(void);

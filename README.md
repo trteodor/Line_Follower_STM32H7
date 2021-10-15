@@ -8,5 +8,7 @@ I speak in Polish league on the video.
 
 I am not satisfied with the quality of this code. This project is my first approach to programming and microcontrollers ....
 
-![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/ApkaiRobot.PNG)
-![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/NaTorze.PNG)
+![RobotPic1](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/20210125_161132.jpg)
+![RobotPic2](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/20210125_161158.jpg)
+![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/ApkaiRobot.PNG)
+![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/NaTorze.PNG)

@@ -95,7 +95,7 @@ typedef enum
 #define S_Line_6_DetectValueToMobileAPP 'L'
 #define S_Line_7_DetectValueToMobileAPP 'T'
 #define S_Line_8_DetectValueToMobileAPP 'Y'
-/* Actual line sensor detect value*/
+/* Actual line sensor data value*/
 #define S_Line_1_Data_ToM_App_Comm "CZ1:"
 #define S_Line_2_Data_ToM_App_Comm "CZ2:"
 #define S_Line_3_Data_ToM_App_Comm "CZ3:"

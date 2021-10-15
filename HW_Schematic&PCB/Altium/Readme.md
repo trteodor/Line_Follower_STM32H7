@@ -4,7 +4,12 @@ Production files are attached in the appropriate folders.
 
 Attached data is sufficient to create production files for PCB (Gerber Files) or for reverse engineering. Modifications to schematics and PCBs are also possible.
 
-Unfortunately, I cannot share the libraries used in Altium because I lacked self-discipline. I mean a plan of how and where to place these libraries. 
-And now they are scattered all over my computer in many locations. It would take a long time to track them all down .. :(
-
-
+Some of the most important items or items not shown in the altium schematics:
+* https://botland.com.pl/silniki-dc-micro-z-przekladnia/4974-silnik-hpcb-101-obustronny-wal-pololu-3071.html
+* https://www.tme.eu/pl/details/ffc0520150/tasmy-ffc-fpc/riverdi/
+* https://www.tme.eu/pl/details/mx-15266-0209/tasmy-ffc-fpc/molex/15266-0209/
+* https://botland.com.pl/kola-z-oponami/24-kolo-solarbotics-rw2i-mocowane-wewnetrznie-pololu-1127.html
+* https://botland.com.pl/moduly-bluetooth/9515-modul-bluetooth-40-ble-hm-10-at-09-mlt-bt05-33v5v-5904422313524.html
+* https://sklep.avt.pl/modul-bms-pcm-pcb-ladowania-i-ochrony-ogniw-li-ion-1s-3-7v-3a-do-ogniw-18650.html
+* https://botland.com.pl/akumulatory-li-pol-2s-74v-/8973-pakiet-li-pol-dualsky-250mah-30c-2s-74v-eco-s-6941047104631.html or
+* https://botland.com.pl/akumulatory-li-pol-2s-74v-/8248-pakiet-li-pol-dualsky-150mah-30c-2s-74v-eco-s-6941047106321.html

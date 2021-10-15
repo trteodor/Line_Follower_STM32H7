@@ -262,6 +262,7 @@ void WYSLIJMAPE_DO_BLE()
 	}
 }
 
+
 void pomiardoble(char *dane)
 {
 

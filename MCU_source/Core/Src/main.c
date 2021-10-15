@@ -65,18 +65,18 @@ void LED_BLINKING();
 void ProfilPredkosci();
 void zrob_charakterystki_siln();
 
-uint32_t aktCzas=0;
-uint32_t zapCzas=0;
-
-
-uint32_t aktCzaspPWM=0;
-uint32_t zapCzaspPWM=0;
-int zm_pPWM=0;
-float bufor_zpomiar_prpwm[20];
-int valueofpwm=1000;
-
-int LED_BLINK=1,LED_Helper=0;
-int Sys_Reset=0;
+//uint32_t aktCzas=0;
+//uint32_t zapCzas=0;
+//
+//
+//uint32_t aktCzaspPWM=0;
+//uint32_t zapCzaspPWM=0;
+//int zm_pPWM=0;
+//float bufor_zpomiar_prpwm[20];
+//int valueofpwm=1000;
+//
+//int LED_BLINK=1,LED_Helper=0;
+//int Sys_Reset=0;
 
 void EEPROM_LED_BLINK_READ()
 {
@@ -94,7 +94,7 @@ void PeriphCommonClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint16_t DANE_Z_CZUJNIKOW[8];
+//uint16_t DANE_Z_CZUJNIKOW[8];
 /*
 void my_i2c_scanner(uint8_t adress)
 {
@@ -158,7 +158,7 @@ int main(void)
   //  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
 
 
-  LF_App_MainConfig();
+ // LF_App_MainConfig();
 
 
 //  EEPROM_LED_BLINK_READ(); //defined in this file above
@@ -178,7 +178,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  LF_App_MainTask();
+	//  LF_App_MainTask();
 
 	 // zrob_charakterystki_siln();
 
@@ -309,37 +309,37 @@ void LED_BLINKING()
 {
 #define LED_TOGGLE_TIME 500
 
-	if(LED_BLINK)
-	{
-
-	  aktCzas=HAL_GetTick();
-
-	  if( zapCzas+LED_TOGGLE_TIME < aktCzas)
-	  {
-
-
-	  if(LED_Helper)
-		  {
-		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
-			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
-			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
-			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
-			  LED_Helper=0;
-		  }
-
-
-	  else
-	  {
-			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
-			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
-			  LED_Helper=1;
-	  }
-		  zapCzas= HAL_GetTick();
-		  		  zapCzas=aktCzas;
-	  }
-	}
+//	if(LED_BLINK)
+//	{
+//
+//	  aktCzas=HAL_GetTick();
+//
+//	  if( zapCzas+LED_TOGGLE_TIME < aktCzas)
+//	  {
+//
+//
+//	  if(LED_Helper)
+//		  {
+//		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
+//			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
+//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
+//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
+//			  LED_Helper=0;
+//		  }
+//
+//
+//	  else
+//	  {
+//			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
+//			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
+//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
+//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
+//			  LED_Helper=1;
+//	  }
+//		  zapCzas= HAL_GetTick();
+//		  		  zapCzas=aktCzas;
+//	  }
+//	}
 
 }
 /* USER CODE END 4 */

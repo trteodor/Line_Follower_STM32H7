@@ -39,7 +39,6 @@ RobotState_t LF_Robot_ControlTask()
 {
 	if(Robot_Cntrl.RobotState == LF_Started)
 	{
-		PID_Task();
 		Decode_PID();
 		return LF_Started;
 	}
@@ -186,10 +185,7 @@ void Motor_PWM_Init()
 //}
 
 
-
-//
-
-//void P_trasaA()
+//void Speed_ProfileFunction()
 //{
 //	if(ZMIENNA3==1) //trasa A
 //	{
@@ -215,46 +211,6 @@ void Motor_PWM_Init()
 //	pr_pocz_silnikow=2.0;
 //	}
 //	}
-//}
-//void P_trasaB()
-//{
-//	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
-//	if(ZMIENNA3==2) //trasa B
-//	{
-//	if(P_DRSR>0)
-//	{
-//		pr_pocz_silnikow=1.5;
-//	}
-//	if(P_DRSR>0.1)
-//	{
-//	pr_pocz_silnikow=2.5;
-//	}
-//
-//	if(P_DRSR>0.8)
-//	{
-//	pr_pocz_silnikow=2.2;
-//	}
-//	if(P_DRSR>1)
-//	{
-//	pr_pocz_silnikow=2.5;
-//	}
-//	if(P_DRSR>1.3)
-//	{
-//	pr_pocz_silnikow=1.5;
-//	}
-//	if(P_DRSR>3.1)
-//	{
-//	pr_pocz_silnikow=2.2;
-//	}
-//	if(P_DRSR>3.6)
-//	{
-//	pr_pocz_silnikow=2.3;
-//	}
-//	if(P_DRSR>3.9)
-//	{
-//	pr_pocz_silnikow=2.4;
-//	}
-//	}
-//}
+
 
 //#endif /* SRC_URUCHAMIANIE_C_ */

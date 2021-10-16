@@ -33,15 +33,9 @@
 #include "LF_AppMain.h"
 #include "Encoders_Module.h"
 
-
 #include <stdio.h>
-//#include "CZUJNIKI.h"
-//#include "R_PID.h"
-#include "EEPROM.h"
-//#include "Komendy_BLE.h"
 #include "Robot_Control.h"
-//#include <TSOP2236_new_T.h>
-//#include "ENKODERY.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,14 +55,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//void LED_BLINKING();
-//void ProfilPredkosci();
-//void zrob_charakterystki_siln();
-
-//void EEPROM_LED_BLINK_READ()
-//{
-//	EEPROM_READ_INT(455, &LED_BLINK);
-//}
 
 /* USER CODE END PV */
 
@@ -107,46 +93,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	Enc_AddEncoderImpulsIntoImpulsSum(GPIO_Pin);
 }
 
-
-
-
-void LED_BLINKING()
-{
-#define LED_TOGGLE_TIME 500
-
-//	if(LED_BLINK)
-//	{
-//
-//	  aktCzas=HAL_GetTick();
-//
-//	  if( zapCzas+LED_TOGGLE_TIME < aktCzas)
-//	  {
-//
-//
-//	  if(LED_Helper)
-//		  {
-//		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
-//			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
-//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
-//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
-//			  LED_Helper=0;
-//		  }
-//
-//
-//	  else
-//	  {
-//			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
-//			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
-//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
-//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
-//			  LED_Helper=1;
-//	  }
-//		  zapCzas= HAL_GetTick();
-//		  		  zapCzas=aktCzas;
-//	  }
-//	}
-
-}
 /* USER CODE END 0 */
 
 /**
@@ -196,38 +142,14 @@ int main(void)
   LL_TIM_EnableIT_CC1(TIM2);
   LL_TIM_EnableCounter(TIM2);
 
-  LF_App_MainConfig();
-
-//  EEPROM_LED_BLINK_READ(); //defined in this file above
-//  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
-//  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
-//  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
-
+  LF_App_MainConfig(); //Application/Src/LF_AppMain
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  LF_App_MainTask();
-
-	 // zrob_charakterystki_siln();
-
-//	  oblicz_predkosc();
-//	  mierzprzebdr();
-//
-//	  ProfilPredkosci();
-//
-//	  OBLICZ_BLAD(); //reference to file "CZUJNIKI.c"
-//	  calculatePID(); //reference to file "R_PID.c"
-//	  Robot_Control(); //reference to file "Robot_Control.c"
-//	  DANE_DO_APLIKACJI_MOBILNEJ(); ////reference to file "Komendy_BLE.h"
-//	  LED_BLINKING(); //defined in this file below
-//	  IR_READER();
-//
-//	 wykryj_znacznik();
-	// pomiardoble();
-
+	  LF_App_MainTask(); //Application/Src/LF_AppMain
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

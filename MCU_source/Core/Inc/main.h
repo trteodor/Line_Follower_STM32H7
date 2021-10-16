@@ -96,9 +96,6 @@ void Error_Handler(void);
 #define EEPROM_WC_Pin GPIO_PIN_7
 #define EEPROM_WC_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-extern int LED_BLINK;
-
-extern void LED_BLINKING();
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

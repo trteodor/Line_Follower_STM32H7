@@ -18,6 +18,8 @@
 #include "PID_Reg_Module.h"
 #include "ftoa_function.h"
 #include "Robot_Control.h"
+#include "IR_Module.h"
+#include "BlinkLedMod.h"
 
 extern Robot_Cntrl_t Robot_Cntrl;
 
@@ -68,6 +70,23 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 		Robot_Cntrl.RobotState = LF_go_Stop;
 	break;
 	}
+	/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
+
+	case SaveDataVal1://fallthrough
+	case SaveDataVal2:
+	{
+		int i=0;
+		UNUSED(i);
+		//to define
+	break;
+	}
+	case StopSavingData:
+	{
+		int i=0;
+		UNUSED(i);
+		//to define
+	break;
+	}
 	/* @@@@@ @@@@ "Basic" Screen in Mobile App */
 	case StartSendActualPID_AndCalcMotor_Data:
 	{
@@ -108,22 +127,6 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	{
 		PID_Module.BaseMotorSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
 		EEPROM_WRITE_FLOAT(EEPROM_AddrBaseMotorSpeedValue,&PID_Module.BaseMotorSpeed);
-	break;
-	}
-		/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
-	case SaveDataVal1:
-	{
-		//fall through
-//	break;
-	}
-	case SaveDataVal2:
-	{
-		//to define
-	break;
-	}
-	case StopSavingData:
-	{
-		//to define
 	break;
 	}
 	/* @@@@@ @@@@ Sensor Screen in Mobile App */
@@ -263,50 +266,52 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	}
 	case MaxSumValue_forPidKi :
 	{
-		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+		PID_Module.Ki_Sum_MaxVal = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_MaxSumValue_forPidKi_Addr,&PID_Module.Ki_Sum_MaxVal);
 	break;
 	}
 	case PID_KdProbeTime :
 	{
-		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+		PID_Module.PID_DerivativeTime = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_PID_KdProbeTime_Addr,&PID_Module.PID_DerivativeTime);
 	break;
 	}
-	case Motor1TestStart :
-	{
-		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-	break;
-	}
-	case Motor1TestStop :
-	{
-		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-	break;
-	}
-	case Reserv3 :
-	{
-//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-	break;
-	}
-	case Reserv4 :
-	{
-//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-	break;
-	}
+//	case Motor1TestStart :
+//	{
+//		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+//	break;
+//	}
+//	case Motor1TestStop :
+//	{
+//		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+//	break;
+//	}
+//	case Reserv3 :
+//	{
+////		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+////		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+//	break;
+//	}
+//	case Reserv4 :
+//	{
+////		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+////		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+//	break;
+//	}
 	case IrSensor ://?
 	{
-//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+		IrModule.Ir_State = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		uint32_t tmpIr_state= IrModule.Ir_State;
+		EEPROM_WRITE_INT(EEPROM_IrSensorState_Addr,(int *)&tmpIr_state);
 	break;
 	}
 	case LedMode :
 	{
-//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
+		LedBlinkState = atof((char *)HM10BLE_App.ReceiveBuffer);
+		uint32_t tmpLed_state = LedBlinkState;
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,(int *)&tmpLed_state);
 	break;
 	}
 	default:
@@ -371,50 +376,18 @@ static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun()
 		  return BLE_OK;
 		  }
 		  if (DataToSendQueue==5){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, Motor1TestStart_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+		  itoa(IrModule.Ir_State,after_con_val ,10);
+		  strcat(after_con_val, IrSensor_d);
+		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
 		  }
 		  if (DataToSendQueue==6){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, Motor1TestStop_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==7){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, Reserv3_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==8){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, Reserv4_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==9){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, IrSensor_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==10){
-//		  ftoa(  ,after_con_val ,2);
-//		  strcat(after_con_val, LedMode_d);
-//		  strcat(BuffToBLE,after_con_val );
-//		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+		  itoa(LedBlinkState,after_con_val ,10);
+		  strcat(after_con_val, LedMode_d);
+		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue=1;
 		  return GoToIdle;
 		  }
@@ -504,6 +477,7 @@ static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun()
 		  ftoa(PID_Module.PID_value,after_con_val ,2);
 		  strcat(after_con_val, PID_ActualValue);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -512,6 +486,7 @@ static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun()
 		  ftoa(PID_Module.CalculatedLeftMotorSpeed,after_con_val ,2);
 		  strcat(after_con_val, LeftMotorSpeed);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -520,14 +495,16 @@ static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun()
 		  ftoa(PID_Module.CalculatedRightMotorSpeed,after_con_val ,2);
 		  strcat(after_con_val, RightMotorSpeed);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
 		  }
 		  if (DataToSendQueue==4){
 		  ftoa(SensorModule.PositionErrorValue,after_con_val ,2);
-		  strcat(after_con_val, ActualPositionError);
+		  strcat(BuffToBLE,ActualPositionError);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -536,6 +513,7 @@ static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun()
 		  ftoa(PID_Module.Ki_Sum,after_con_val ,2);
 		  strcat(after_con_val, PID_Ki_Sum);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue=1; //Reset Function
 		  return BLE_OK;
@@ -569,6 +547,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[0],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_1);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -577,6 +556,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[1],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_2);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -585,6 +565,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[2],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_3);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -593,6 +574,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[3],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_4);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -601,6 +583,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[4],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_5);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -609,6 +592,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[5],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_6);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -617,6 +601,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorValue[6],after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_7);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -625,6 +610,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  ftoa(SensorModule.SensorErrorMaxValue,after_con_val ,2);
 		  strcat(after_con_val, S_LineErWToM_App_Max);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -633,6 +619,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[0],after_con_val ,10);
 		  strcat(after_con_val, S_Line_1_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -641,6 +628,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[1],after_con_val ,10);
 		  strcat(after_con_val, S_Line_2_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -649,6 +637,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[2],after_con_val ,10);
 		  strcat(after_con_val, S_Line_3_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -657,6 +646,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[3],after_con_val ,10);
 		  strcat(after_con_val, S_Line_4_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -665,6 +655,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[4],after_con_val ,10);
 		  strcat(after_con_val, S_Line_5_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -673,6 +664,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[5],after_con_val ,10);
 		  strcat(after_con_val, S_Line_6_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -681,6 +673,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[6],after_con_val ,10);
 		  strcat(after_con_val, S_Line_7_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue++;
 		  return BLE_OK;
@@ -689,6 +682,7 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun()
 		  itoa(SensorModule.LineDetectValue[7],after_con_val ,10);
 		  strcat(after_con_val, S_Line_8_DetectValueToMobileAPP);
 		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_App.BleTxState=BLE_TX_Busy;
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue=1; //Reset function
 		  return GoToIdle; //Transmision End
@@ -807,7 +801,12 @@ static Ble_AppStatus SendActualLineSensorDataFun()
 
 static uint8_t GetCommandFromBleMessage(uint16_t RecDataSize)
 {
-	//dk why 2 :/ (Behavior Mobile App)
+	if(HM10BLE_App.ReceiveBuffer[RecDataSize-2] == 226) //special mark for save data in file only
+														//anyway you can always check MobileApp Source and UCF-8
+														//Rly dk how to explain ;)
+	{
+		RecDataSize--;
+	}
 	return HM10BLE_App.ReceiveBuffer[RecDataSize-2];
 }
 
@@ -827,14 +826,12 @@ void HM10BLE_RxEventCallback(uint16_t RecDataSize)
 
 void HM10BLE_TxCmpltEventCallback()
 {
-//Do Something
 	HM10BLE_App.BleTxState=BLE_TX_Ready;
 }
 
 void HM10BLE_Tx(uint8_t *pData, uint16_t Size)
 {
 	HAL_UART_Transmit_DMA(&huart2, pData, Size);
-//	HAL_Delay(10);
 }
 
 

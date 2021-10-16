@@ -39,7 +39,9 @@
 #define EEPROM_PID_KdProbeTime_Addr 420
 #define EEPROM_Reserv3_Addr 440
 #define EEPROM_Reserv4_Addr 445
+
 #define EEPROM_IrSensorState_Addr 450
+
 #define EEPROM_LedModeState_Addr 455
 
 

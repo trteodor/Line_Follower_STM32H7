@@ -56,12 +56,10 @@ typedef enum
 	ReverseSpeed ='h',
 	MaxSumValue_forPidKi ='q',
 	PID_KdProbeTime ='w',
-	Motor1TestStart ='e',
-	Motor1TestStop ='`',
-	Reserv3 ='t',
-	Reserv4 ='y',
 	IrSensor ='j', //?
 	LedMode ='J', //?
+
+
 }HM10BleCommand_t;
 
 
@@ -113,11 +111,24 @@ typedef enum
 #define ReverseSpeed_d "h"
 #define MaxSumValue_forPidKi_d "q"
 #define PID_KdProbeTime_dd "w"
-#define Motor1TestStart_d "e"
-#define Motor1TestStop_d "`"
-#define Reserv3_d "t"
-#define Reserv4_d "y"
 #define IrSensor_d "j" //?
 #define LedMode_d "J" //?
+
+
+//UNUSED: totally
+//#define  "e"
+//#define  "`"
+//#define  "t"
+//#define  "y"
+//It was used as:
+//	Motor1TestStart ='e',
+//	Motor1TestStop ='`',
+//	Reserv3 ='t',
+//	Reserv4 ='y',
+//maybe some more marks are avaible I dk.
+
+
+
+
 
 #endif /* HM10Commands_H_ */

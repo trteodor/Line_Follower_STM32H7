@@ -12,57 +12,31 @@
 #include "HM10_BleModule.h"
 #include "EEPROM.h"
 #include "Robot_Control.h"
-
-RC5Struct TSOP2236;
-uint16_t TSOP_NormRecData;
-
-void IR_DataRead();
-
+#include "IR_Module.h"
+#include "BlinkLedMod.h"
 
 
 void LF_App_MainConfig(void)
 {
 	EEPROM_WriteEnable();
-	RC5_INIT(&TSOP2236);
-	HM10BLE_Init();
-	//	RC5100usTimer Called from stm32h7xx_it.c file
-	//	RC5_IR_EXTI_GPIO_ReceiveAndDecodeFunction Called from stm32h7xx_it.c file
 
+	HM10BLE_Init();
+	IR_ModInit();
+
+	BlinkLedInit();
 	SM_SensorModuleInit();
 	PID_Init();
 	LF_Robot_ControlInit();
 }
 
-void LF_App_MainTask(void)
+void LF_App_MainTask(void) //only one Task without any RTOS, all works fine -- for now the soultion is inaf :)
 {
 	HM10Ble_Task();
-//	IR_DataRead();
+	IR_Task();
+	PID_Task();
 	LF_Robot_ControlTask();
+	BlinkLedTask();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void IR_DataRead()
-{
-		RC5_ReadNormal(&TSOP2236, &TSOP_NormRecData);
-		char Recval[50];
-		int size = sprintf(Recval,"RecVal:0x%x\n\r",TSOP_NormRecData);
-
-		HAL_UART_Transmit_DMA(&huart2,(uint8_t*) Recval, size);
-		HAL_Delay(100);
-}
-
 
 
 

@@ -25,6 +25,7 @@ typedef struct
 extern Robot_Cntrl_t Robot_Cntrl;
 
 
-extern RobotState_t LF_Robot_ControlTask();
+RobotState_t LF_Robot_ControlTask();
+void LF_Robot_ControlInit();
 
 #endif /* INC_URUCHAMIANIE_H_ */

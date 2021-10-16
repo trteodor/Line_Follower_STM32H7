@@ -1,6 +1,6 @@
-#include "HM10_BleModule.h"
-#include "HM_10_BleAppCommands.h"
-
+/*
+ * Part od applation which
+ */
 #include "main.h"
 #include "string.h"
 #include <stdio.h>
@@ -9,12 +9,17 @@
 #include "usart.h"
 #include "gpio.h"
 
+#include "EEPROM.h"
+#include "EEPROM_VarLocDef.h"
+#include "HM10_BleModule.h"
+#include "HM_10_BleAppCommands.h"
+
 #include "LineSensorsModule.h"
 #include "PID_Reg_Module.h"
 #include "ftoa_function.h"
+#include "Robot_Control.h"
 
-#include "EEPROM.h"
-#include "EEPROM_VarLocDef.h"
+extern Robot_Cntrl_t Robot_Cntrl;
 
 #define TimeBeetweenNextDataPart 15
 
@@ -55,12 +60,12 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	//General App view
 	case DrivingStartCommand :
 	{
-			//
+		Robot_Cntrl.RobotState = LF_go_Start;
 	break;
 	}
 	case DrivingStopCommand:
 	{
-			//
+		Robot_Cntrl.RobotState = LF_go_Stop;
 	break;
 	}
 	/* @@@@@ @@@@ "Basic" Screen in Mobile App */

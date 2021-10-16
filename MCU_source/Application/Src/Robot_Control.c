@@ -10,6 +10,7 @@
 
 #include "Robot_Control.h"
 #include "PID_Reg_Module.h"
+#include "Encoders_Module.h"
 
 Robot_Cntrl_t Robot_Cntrl;
 extern PID_RegModule_t PID_Module;
@@ -17,29 +18,41 @@ extern PID_RegModule_t PID_Module;
 
 void Decode_PID();
 static void LF_Robot_Stop();
+static void Motor_PWM_Init();
+static void ForwardDriving(int LeftMotorSpeed, int RightMotorSpeed);
+static void RightMotorDrivingReverse(int LeftMotorSpeed, int RightMotorSpeed);
+static void LeftMotorDrivingReverse(int LeftMotorSpeed, int RightMotorSpeed);
+
+void LF_Robot_ControlInit()
+{
+	Motor_PWM_Init();
+}
+
+struct
+{
+	float X[MaxProbeNumber];
+	float Y[MaxProbeNumber];
+	float T[MaxProbeNumber];
+}PositionOnTrack;
 
 RobotState_t LF_Robot_ControlTask()
 {
-
-
 	if(Robot_Cntrl.RobotState == LF_Started)
 	{
 		PID_Task();
 		Decode_PID();
-
 		return LF_Started;
 	}
 	if(Robot_Cntrl.RobotState == LF_go_Start) //Bluetooth or Ir Rec Can Change the state
 	{
 		Robot_Cntrl.RobotState = LF_Started;
-		LF_Robot_ControlTask(); //Recurention :) frist time ever in my life :o
+		LF_Robot_ControlTask(); //Recurention!!! :) :oo I used it :D
 	}
 	if(Robot_Cntrl.RobotState == LF_go_Stop)
 	{
 		Robot_Cntrl.RobotState = LF_Idle;
 		LF_Robot_Stop();
 	}
-
 return LF_Idle;
 }
 
@@ -63,69 +76,51 @@ void Decode_PID()
 
 			int _CalculatedLeftMotorSpeed=PID_Module.CalculatedLeftMotorSpeed*(-1);
 
-			LEWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			LeftMotorDrivingReverse(_CalculatedLeftMotorSpeed, PID_Module.CalculatedRightMotorSpeed);
 			return;
 		}
-
-	if(Pr_Silnika_Prawego<0)
+	if(PID_Module.CalculatedRightMotorSpeed < 0)
 		{
-			Pr_Silnika_Prawego=Pr_Silnika_Prawego*(-1);
+		int _CalculatedRightMotorSpeed=PID_Module.CalculatedRightMotorSpeed*(-1);
 
-			PRAWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			RightMotorDrivingReverse(PID_Module.CalculatedLeftMotorSpeed, _CalculatedRightMotorSpeed);
+
 			return;
 		}
 
-	JAZDA_DO_PRZODU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+	ForwardDriving(PID_Module.CalculatedLeftMotorSpeed, PID_Module.CalculatedRightMotorSpeed);
+	return;
 }
 
-void JAZDA_DO_PRZODU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+static void ForwardDriving(int LeftMotorSpeed, int RightMotorSpeed)
 {
 
-  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue);//-->> Naprzod
-  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
+  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxPWMValue);//-->> Forward
+  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxPWMValue - RightMotorSpeed);
 
-  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
-  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxPWMValue);
+  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxPWMValue - LeftMotorSpeed); //-->> Forward
 
 }
-void PRAWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+
+static void RightMotorDrivingReverse(int LeftMotorSpeed, int RightMotorSpeed)
 {
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr);
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);  //-->> Do tylu
-
-
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
-
-
-
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxPWMValue - RightMotorSpeed);
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxPWMValue);  //-->> Reverse tylu
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxPWMValue);
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxPWMValue - LeftMotorSpeed); //-->> Forward
 }
-void LEWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+static void LeftMotorDrivingReverse(int LeftMotorSpeed, int RightMotorSpeed)
 {
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue); //-->> Do tylu
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
-
-
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue);
-
-
-
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxPWMValue); //-->> Forward
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxPWMValue - RightMotorSpeed);
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxPWMValue - LeftMotorSpeed); //-->> Reverse
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxPWMValue);
 }
-void JAZDA_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
-{
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr); //-->> Do tylu
-	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);
 
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew);
-	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue); //-->> Do tylu
-
-}
 
 void Motor_PWM_Init()
 {
-	EEPROM_PID_READ();
-	EEPROM_ZAAW_READ();
     HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_2);
 
@@ -141,9 +136,6 @@ void Motor_PWM_Init()
 
 
 //
-//float X[4000];
-//float Y[4000];
-//float T[4000];
 //void wyznacz_xiy()
 //{
 //	for(int i=0;  i<nr_probki; i++)
@@ -264,7 +256,5 @@ void Motor_PWM_Init()
 //	}
 //	}
 //}
-
-
 
 //#endif /* SRC_URUCHAMIANIE_C_ */

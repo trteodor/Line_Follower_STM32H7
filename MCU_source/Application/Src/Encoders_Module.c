@@ -83,7 +83,7 @@ void Enc_CalculateTraveledDistance()
 
 
 //
-//void wykryj_znacznik()
+//void TryDetectLapEndMark()
 //{
 //	wykr_znacznik=0;
 //

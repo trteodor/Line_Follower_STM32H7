@@ -30,7 +30,7 @@ void LF_App_MainConfig(void)
 
 	SM_SensorModuleInit();
 	PID_Init();
-
+	LF_Robot_ControlInit();
 }
 
 void LF_App_MainTask(void)

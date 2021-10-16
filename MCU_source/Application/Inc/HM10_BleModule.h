@@ -36,6 +36,7 @@ typedef struct
 extern HM10BLE_t HM10BLE_App;
 
 void HM10BLE_Init();
+void HM10Ble_Task();
 void HM10BLE_RxEventCallback(uint16_t RecDataSize);
 void HM10BLE_TxCmpltEventCallback();
 

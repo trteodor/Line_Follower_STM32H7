@@ -61,27 +61,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-void LED_BLINKING();
-void ProfilPredkosci();
-void zrob_charakterystki_siln();
+//void LED_BLINKING();
+//void ProfilPredkosci();
+//void zrob_charakterystki_siln();
 
-//uint32_t aktCzas=0;
-//uint32_t zapCzas=0;
-//
-//
-//uint32_t aktCzaspPWM=0;
-//uint32_t zapCzaspPWM=0;
-//int zm_pPWM=0;
-//float bufor_zpomiar_prpwm[20];
-//int valueofpwm=1000;
-//
-//int LED_BLINK=1,LED_Helper=0;
-//int Sys_Reset=0;
-
-void EEPROM_LED_BLINK_READ()
-{
-	EEPROM_READ_INT(455, &LED_BLINK);
-}
+//void EEPROM_LED_BLINK_READ()
+//{
+//	EEPROM_READ_INT(455, &LED_BLINK);
+//}
 
 /* USER CODE END PV */
 
@@ -94,17 +81,6 @@ void PeriphCommonClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//uint16_t DANE_Z_CZUJNIKOW[8];
-/*
-void my_i2c_scanner(uint8_t adress)
-{
-	  if(HAL_I2C_IsDeviceReady(&hi2c1, (adress << 1 ) , 1, 100) == HAL_OK)
-	  {
-
-		 // HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-	  }
-	  HAL_Delay(10);
-}*/
 
 /* USER CODE END 0 */
 
@@ -154,23 +130,13 @@ int main(void)
   //Activate 100usTimer
   LL_TIM_EnableIT_CC1(TIM2);
   LL_TIM_EnableCounter(TIM2);
-  //just for information (it is set by default in CubeMX
-  //  HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
-
 
   LF_App_MainConfig();
-
 
 //  EEPROM_LED_BLINK_READ(); //defined in this file above
 //  CZUJNIKI_INIT(); //Init the sensors,reference to file "CZUJNIKI.c"
 //  Motor_PWM_Init(); //Init the PWM on Motor Drivers,reference to file "R_PID.c"
 //  IR_INIT(); //Init the IR detector, reference to file "IR_TSOP2236_byTeor.c"
-
-
-
-
-	/*float CZ_B1,CZ_B2,CZ_B3;
-  unsigned long l=0;*/
 
   /* USER CODE END 2 */
 

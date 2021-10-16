@@ -19,20 +19,30 @@ union TO_EEPROM {
     float  wartosc;
 } u;
 */
+void EEPROM_WriteEnable()
+{
+	//Write enable pin, in CubeMX by Default the pin is SET!!!!
+	HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
+}
+
+void EEPROM_WriteDisable()
+{
+	//Write enable pin, in CubeMX by Default the pin is SET!!!!
+	HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_SET);
+}
+
+
 int8_t EEPROM_WRITE(uint16_t MemAdr, uint8_t *regData , uint16_t len)
 {
 	// HAL_I2C_Mem_Write(hi2c, DevAddress, MemAddress, MemAddSize, pData, Size, Timeout)
-	HAL_I2C_Init(&hi2c1);
 	HAL_I2C_Mem_Write(&hi2c1, Sektor1, MemAdr, 1, regData, len, 1);
-	HAL_I2C_DeInit(&hi2c1);
 	return 0;
+
 }
 
 int8_t EEPROM_READ(uint16_t MemAdr, uint8_t *regData , uint16_t len)
 {
-	HAL_I2C_Init(&hi2c1);
 	HAL_I2C_Mem_Read(&hi2c1, Sektor1, MemAdr, 1, regData, len, 1);
-	HAL_I2C_DeInit(&hi2c1);
 	return 0;
 }
 
@@ -44,9 +54,10 @@ float EEPROM_WRITE_FLOAT(uint16_t MemAdr, float *regData)  //Float value is 32bi
 	      float wartoscfloat;
 	  } u;
 
-	u.wartoscfloat=*regData;
+	  	  u.wartoscfloat=*regData;
 
-	EEPROM_WRITE(MemAdr, (uint8_t*)&u, 4);
+		  EEPROM_WRITE(MemAdr, (uint8_t*)&u, 4);
+
 	return 0;
 }
 
@@ -86,8 +97,8 @@ int EEPROM_WRITE_INT(uint16_t MemAdr, int *regData)  //Float value is 16bit so n
 
 int EEPROM_READ_INT(uint16_t MemAdr,int *regData)
 {
-	//Is Need some delay beetween evry read
-	HAL_Delay(2); //?? :/
+	//Is Need some delay
+	HAL_Delay(2);
 
 	  union TO_EEPROM {
 	      uint8_t in8bit [4];

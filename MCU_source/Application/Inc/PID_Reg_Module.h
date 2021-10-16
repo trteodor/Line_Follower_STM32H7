@@ -32,4 +32,8 @@ typedef struct
 extern PID_RegModule_t PID_Module;
 /*Few field of the structure above are also modified by HM10Ble App Module*/
 
+
+void PID_Init();
+void PID_Task();
+
 #endif //_PID_Reg_Module_H_

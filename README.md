@@ -14,10 +14,10 @@ I speak in Polish league on the video.
 * A lot of things in this project can be done better, but it is done as is :)
 
 # Few Pictures :
-![RobotPic1](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/20210125_161132.jpg)
-![RobotPic2](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/20210125_161158.jpg)
-![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/ApkaiRobot.PNG)
-![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/develop/Pictures/NaTorze.PNG)
+![RobotPic1](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/20210125_161132.jpg)
+![RobotPic2](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/20210125_161158.jpg)
+![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/ApkaiRobot.PNG)
+![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/NaTorze.PNG)
 
 # Acknowledge sources :
 * https://forbot.pl/blog/algorytm-linefollowera-c-poczatkujacych-id2722

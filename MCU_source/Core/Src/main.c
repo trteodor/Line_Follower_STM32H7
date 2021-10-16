@@ -31,7 +31,7 @@
 /* USER CODE BEGIN Includes */
 #include "HM10_BleModule.h"
 #include "LF_AppMain.h"
-
+#include "Encoders_Module.h"
 
 
 #include <stdio.h>
@@ -82,6 +82,71 @@ void PeriphCommonClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+	// Check if UART2 trigger the Callback
+	if(huart->Instance == USART2)
+	{
+		// Start listening again
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, HM10BLE_App.ReceiveBuffer, ReceiveBufferSize);
+		HM10BLE_RxEventCallback(Size);
+	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	// Check if UART2 triggered the Callback
+	if(huart->Instance == USART2)
+	{
+		HM10BLE_TxCmpltEventCallback();
+	}
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	Enc_AddEncoderImpulsIntoImpulsSum(GPIO_Pin);
+}
+
+
+
+
+void LED_BLINKING()
+{
+#define LED_TOGGLE_TIME 500
+
+//	if(LED_BLINK)
+//	{
+//
+//	  aktCzas=HAL_GetTick();
+//
+//	  if( zapCzas+LED_TOGGLE_TIME < aktCzas)
+//	  {
+//
+//
+//	  if(LED_Helper)
+//		  {
+//		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
+//			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
+//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
+//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
+//			  LED_Helper=0;
+//		  }
+//
+//
+//	  else
+//	  {
+//			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
+//			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
+//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
+//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
+//			  LED_Helper=1;
+//	  }
+//		  zapCzas= HAL_GetTick();
+//		  		  zapCzas=aktCzas;
+//	  }
+//	}
+
+}
 /* USER CODE END 0 */
 
 /**
@@ -247,67 +312,6 @@ void PeriphCommonClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
-{
-	// Check if UART2 trigger the Callback
-	if(huart->Instance == USART2)
-	{
-		// Start listening again
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, HM10BLE_App.ReceiveBuffer, ReceiveBufferSize);
-		HM10BLE_RxEventCallback(Size);
-	}
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-	// Check if UART2 triggered the Callback
-	if(huart->Instance == USART2)
-	{
-		HM10BLE_TxCmpltEventCallback();
-	}
-}
-
-
-
-
-
-void LED_BLINKING()
-{
-#define LED_TOGGLE_TIME 500
-
-//	if(LED_BLINK)
-//	{
-//
-//	  aktCzas=HAL_GetTick();
-//
-//	  if( zapCzas+LED_TOGGLE_TIME < aktCzas)
-//	  {
-//
-//
-//	  if(LED_Helper)
-//		  {
-//		  	  // HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
-//			  //  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_SET);
-//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
-//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
-//			  LED_Helper=0;
-//		  }
-//
-//
-//	  else
-//	  {
-//			//  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
-//			//  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin,GPIO_PIN_RESET);
-//			  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
-//			  HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
-//			  LED_Helper=1;
-//	  }
-//		  zapCzas= HAL_GetTick();
-//		  		  zapCzas=aktCzas;
-//	  }
-//	}
-
-}
 /* USER CODE END 4 */
 
 /**

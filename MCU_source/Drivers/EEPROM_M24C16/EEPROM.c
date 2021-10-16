@@ -13,15 +13,10 @@
 					//Details in datasheet this memeory
 
 #include "EEPROM.h"
-/*
-union TO_EEPROM {
-    char in8bit [4];
-    float  wartosc;
-} u;
-*/
+
 void EEPROM_WriteEnable()
 {
-	//Write enable pin, in CubeMX by Default the pin is SET!!!!
+	//Write enable pin, in CubeMX by Default the pin is SET!!!! for my App
 	HAL_GPIO_WritePin(EEPROM_WC_GPIO_Port, EEPROM_WC_Pin, GPIO_PIN_RESET);
 }
 

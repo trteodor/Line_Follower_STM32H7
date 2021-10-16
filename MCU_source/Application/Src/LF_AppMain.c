@@ -11,6 +11,7 @@
 #include "PID_Reg_Module.h"
 #include "HM10_BleModule.h"
 #include "EEPROM.h"
+#include "Robot_Control.h"
 
 RC5Struct TSOP2236;
 uint16_t TSOP_NormRecData;
@@ -23,19 +24,20 @@ void LF_App_MainConfig(void)
 {
 	EEPROM_WriteEnable();
 	RC5_INIT(&TSOP2236);
+	HM10BLE_Init();
 	//	RC5100usTimer Called from stm32h7xx_it.c file
 	//	RC5_IR_EXTI_GPIO_ReceiveAndDecodeFunction Called from stm32h7xx_it.c file
-	SensorModuleInit();
+
+	SM_SensorModuleInit();
 	PID_Init();
-	HM10BLE_Init();
+
 }
 
 void LF_App_MainTask(void)
 {
-	SensorsCalculateError();
-	PID_Task();
 	HM10Ble_Task();
 //	IR_DataRead();
+	LF_Robot_ControlTask();
 }
 
 

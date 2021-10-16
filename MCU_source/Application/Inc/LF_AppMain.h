@@ -1,5 +1,5 @@
-#ifndef _AppMainJobs_H
-#define _AppMainJobs_H
+#ifndef INC_AppMainJobs_H_
+#define INC_AppMainJobs_H_
 
 extern void HM10BLE_Init();
 extern void LF_App_MainConfig(void);

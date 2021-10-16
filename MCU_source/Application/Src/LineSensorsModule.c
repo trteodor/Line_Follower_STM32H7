@@ -9,15 +9,15 @@
 SensorModule_t SensorModule;
 /*Few field of the structure above are also modified by HM10Ble App Module*/
 
-void Read_SensorsValue_From_EEPROM();
+static void Read_SensorsValue_From_EEPROM();
 
-void SensorModuleInit()
+void SM_SensorModuleInit()
 {
 	HAL_ADC_Start_DMA(&hadc1,(uint32_t*)SensorModule.SensorADCValues,8); //Turn on Sensor Read
 	Read_SensorsValue_From_EEPROM();
 }
 
-float SensorsCalculateError()
+float SM_SensorsCalculateError()
 {
 	static int OST_KIER_BL=0;
 
@@ -88,7 +88,7 @@ float SensorsCalculateError()
 
 
 
-void Read_SensorsValue_From_EEPROM()
+static void Read_SensorsValue_From_EEPROM()
 {
 EEPROM_READ_FLOAT(EEPROM_ErrW1_Addr, &SensorModule.SensorErrorValue[0]);
 EEPROM_READ_FLOAT(EEPROM_ErrW2_Addr, &SensorModule.SensorErrorValue[1]);

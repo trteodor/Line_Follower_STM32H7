@@ -13,8 +13,8 @@ typedef struct
 extern SensorModule_t SensorModule;
 /*Few field of the structure above are also modified by HM10Ble App Module*/
 
-void SensorModuleInit();
-float SensorsCalculateError();
+void SM_SensorModuleInit();
+float SM_SensorsCalculateError();
 
 
 #endif //_LineSensor_H

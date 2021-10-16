@@ -16,6 +16,12 @@
 *  4. Call Init Function in main with pointer to object created in step 3
 *  5. Read the Received data with function "RC5_ReadNormal" -- RC5_ReadNormal(&RC5Device,&RC5_RecDat)
 */
+/*
+ * This file was modified a bit for LF_Application
+ *
+ */
+
+
 #include <stdlib.h>
 #include "TSOP2236_T.h"
 

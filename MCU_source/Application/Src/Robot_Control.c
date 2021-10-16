@@ -1,26 +1,202 @@
-///*
-// * Uruchamianie.c
-// *
-// *  Created on: Sep 28, 2020
-// *      Author: Teodor
-// */
+/*
+ * Uruchamianie.c
+ *
+ *  Created on: Sep 28, 2020
+ *      Author: Teodor
+ */
+
+#include "main.h"
+#include "tim.h"
+
+#include "Robot_Control.h"
+#include "PID_Reg_Module.h"
+
+Robot_Cntrl_t Robot_Cntrl;
+extern PID_RegModule_t PID_Module;
+
+
+void Decode_PID();
+static void LF_Robot_Stop();
+
+RobotState_t LF_Robot_ControlTask()
+{
+
+
+	if(Robot_Cntrl.RobotState == LF_Started)
+	{
+		PID_Task();
+		Decode_PID();
+
+		return LF_Started;
+	}
+	if(Robot_Cntrl.RobotState == LF_go_Start) //Bluetooth or Ir Rec Can Change the state
+	{
+		Robot_Cntrl.RobotState = LF_Started;
+		LF_Robot_ControlTask(); //Recurention :) frist time ever in my life :o
+	}
+	if(Robot_Cntrl.RobotState == LF_go_Stop)
+	{
+		Robot_Cntrl.RobotState = LF_Idle;
+		LF_Robot_Stop();
+	}
+
+return LF_Idle;
+}
+
+void LF_Robot_Stop()
+{
+	//Robot off
+    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,1000);
+    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,1000);
+
+    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,1000);
+    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,1000);
+}
+
+
+
+
+void Decode_PID()
+{
+	if(PID_Module.CalculatedLeftMotorSpeed<0)
+		{
+
+			int _CalculatedLeftMotorSpeed=PID_Module.CalculatedLeftMotorSpeed*(-1);
+
+			LEWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			return;
+		}
+
+	if(Pr_Silnika_Prawego<0)
+		{
+			Pr_Silnika_Prawego=Pr_Silnika_Prawego*(-1);
+
+			PRAWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+			return;
+		}
+
+	JAZDA_DO_PRZODU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
+}
+
+void JAZDA_DO_PRZODU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+{
+
+  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue);//-->> Naprzod
+  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
+
+  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
+  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+
+}
+void PRAWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+{
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr);
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);  //-->> Do tylu
+
+
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+
+
+
+}
+void LEWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+{
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue); //-->> Do tylu
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
+
+
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue);
+
+
+
+}
+void JAZDA_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
+{
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr); //-->> Do tylu
+	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);
+
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew);
+	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue); //-->> Do tylu
+
+}
+
+void Motor_PWM_Init()
+{
+	EEPROM_PID_READ();
+	EEPROM_ZAAW_READ();
+    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_2);
+
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+
+    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,0);
+    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,0);
+
+    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,0);
+    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,0);
+}
+
+
 //
-//#ifndef SRC_URUCHAMIANIE_C_
-//#define SRC_URUCHAMIANIE_C_
-//#include "Robot_Control.h"
-//#include "tim.h"
-//
-//int T_SIL=0;
-//int URUCHAMIANIE_ROBOTA=0;
-//
-//
-//
-//void ProfilPredkosci()
+//float X[4000];
+//float Y[4000];
+//float T[4000];
+//void wyznacz_xiy()
 //{
-////	P_trasaA();
-////	P_trasaB();
+//	for(int i=0;  i<nr_probki; i++)
+//	{
+//	T[i]=T[i-1]+(1/0.147)*(DROGA_L_W_PROBCE[i]-DROGA_P_W_PROBCE[i]);
+//
+//
+//	X[i]=X[i-1]+(  0.5*cos(T[i-1]) * ( DROGA_L_W_PROBCE[i]+DROGA_P_W_PROBCE[i]) );
+//
+//	Y[i]=Y[i-1]+(  0.5*sin(T[i-1]) * ( DROGA_L_W_PROBCE[i]+DROGA_P_W_PROBCE[i]) );
+//	}
 //
 //}
+//
+//
+//void WYSLIJMAPE_DO_BLE()
+//{
+//	char SEND_DATA_IN_FILE[40];
+//
+//	if(DANE_DO_TEXT)
+//	{
+//		Z_Czas_Do_Pliku=HAL_GetTick();
+//
+//
+//		sprintf(SEND_DATA_IN_FILE,"X,Y,DR_L,DR_P,PR,P\n\r");
+//		DO_BLE(SEND_DATA_IN_FILE);
+//
+//		int znr_probki=nr_probki;
+//		for(int i=0; i<znr_probki; i=i)
+//		{
+//
+//		if(Z_Czas_Do_Pliku+30 <  HAL_GetTick() )
+//			{
+//			Z_Czas_Do_Pliku=HAL_GetTick();
+//					i++;
+//
+//
+//				sprintf(SEND_DATA_IN_FILE,"%f,%f,%f,%f\n\r",X[i],Y[i],DROGA_L_W_PROBCE[i],DROGA_P_W_PROBCE[i] );
+//				DO_BLE(SEND_DATA_IN_FILE);
+//			}
+//		}
+//	}
+//	else
+//	{
+//		sprintf(SEND_DATA_IN_FILE,"T:%f\n\rVs:%f\n\r,D:%f\n\r",CZ_OKR,Sr_Predkosc, P_DRSR);
+//					DO_BLE(SEND_DATA_IN_FILE);
+//	}
+//}
+
+
+
+//
+
 //void P_trasaA()
 //{
 //	if(ZMIENNA3==1) //trasa A
@@ -88,168 +264,7 @@
 //	}
 //	}
 //}
-//
 
 
-//void Decode_PID();
-//
-//void Robot_Control()
-//{
-//	if(URUCHAMIANIE_ROBOTA)
-//	{
-//		//Robot start
-//		//Poki co to tak tylko dla testow...
-//
-//		Decode_PID();
-//
-//	}
-//	else
-//	{
-//		rz_IP=0;
-//		rz_IL=0;
-//
-//		//Robot off
-//	    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,1000);
-//	    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,1000);
-//
-//	    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,1000);
-//	    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,1000);
-//	}
-//}
-//
-//
-//void Decode_PID()
-//{
-//	if(Pr_Silnika_Lewego<0)
-//		{
-//			Pr_Silnika_Lewego=Pr_Silnika_Lewego*(-1);
-//
-//			LEWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
-//			return;
-//		}
-//
-//	if(Pr_Silnika_Prawego<0)
-//		{
-//			Pr_Silnika_Prawego=Pr_Silnika_Prawego*(-1);
-//
-//			PRAWY_DO_TYLU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
-//			return;
-//		}
-//
-//	JAZDA_DO_PRZODU(Pr_Silnika_Lewego, Pr_Silnika_Prawego);
-//}
 
-//float rz_predkoscfb()
-//{
-//	 float pr_zadana=pr_pocz_silnikow;
-//
-//	 float PR_zP;
-//	 float PR_zL;
-//
-//	 	 PR_zL=pr_zadana+PID_value;
-//	 	 PR_zP=pr_zadana-PID_value;
-//
-//
-//
-//		 if(PR_zP>Predkosc_P)
-//		 {
-//			 float delta_pr=PR_zP-Predkosc_P;
-//			 PR_zP=PR_zP+(delta_pr);
-//		 }
-//
-//		 if(PR_zP<Predkosc_P)
-//		 {
-//			 float delta_pr=PR_zP-Predkosc_P;
-//			 PR_zP=PR_zP+(delta_pr);
-//		 }
-//
-//
-//
-//
-//		 if(PR_zL>Predkosc_L)
-//		 {
-//			 float delta_pr=PR_zL-Predkosc_L;
-//			 PR_zL=PR_zL+(delta_pr);
-//		 }
-//
-//		 if(PR_zL<Predkosc_L)
-//		 {
-//			 float delta_pr=PR_zL-Predkosc_L;
-//			 PR_zL=PR_zL+(delta_pr);
-//		 }
-//
-//			 PR_zP= (220*PR_zP)+50 - (220*PID_value);
-//			 PR_zL= (220*PR_zL)+50 + (220*PID_value);
-//
-// Pr_Silnika_Lewego  = PR_zL;
-// Pr_Silnika_Prawego = PR_zP;
-//
-//
-//return 0;
-//}
-
-//void JAZDA_DO_PRZODU(int Pr_Sil_Lew, int Pr_Sil_Pr)
-//{
-//
-//  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue);//-->> Naprzod
-//  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
-//
-//  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
-//  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
-//
-//}
-//void PRAWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
-//{
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr);
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);  //-->> Do tylu
-//
-//
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue);
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
-//
-//
-//
-//}
-//void LEWY_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
-//{
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue); //-->> Do tylu
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue-Pr_Sil_Pr);
-//
-//
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew); //-->> Naprzod
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue);
-//
-//
-//
-//}
-//void JAZDA_DO_TYLU(int Pr_Sil_Lew, int Pr_Sil_Pr)
-//{
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,MaxSpeedValue-Pr_Sil_Pr); //-->> Do tylu
-//	  __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,MaxSpeedValue);
-//
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxSpeedValue-Pr_Sil_Lew);
-//	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxSpeedValue); //-->> Do tylu
-//
-//}
-//
-//void Motor_PWM_Init()
-//{
-//	EEPROM_PID_READ();
-//	EEPROM_ZAAW_READ();
-//    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);
-//    HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_2);
-//
-//    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
-//    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
-//
-//
-//
-//    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,0);
-//    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,0);
-//
-//    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,0);
-//    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,0);
-//}
-
-//
 //#endif /* SRC_URUCHAMIANIE_C_ */

@@ -1,8 +1,8 @@
-#ifndef _PID_Reg_Module_H_
-#define _PID_Reg_Module_H_
+#ifndef INC_PID_Reg_Module_H_
+#define INC_PID_Reg_Module_H_
 
 #define MaxPID_DerivativeTime 200
-#define MaxSpeedValue 1000 //Depends on the PWM value of the timer counter (Max Timer Count Value dk how to explain :( )
+#define MaxPWMValue 1000 //Depends on the PWM value of the timer counter (Max Timer Count Value dk how to explain :( )
 
 typedef struct
 {

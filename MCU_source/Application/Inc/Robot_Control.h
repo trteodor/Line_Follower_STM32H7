@@ -8,13 +8,23 @@
 #ifndef INC_URUCHAMIANIE_H_
 #define INC_URUCHAMIANIE_H_
 
-#define zmienna1 T_SIL
-#define zmienna2 T_SIL
+typedef enum
+{
+	LF_Idle,
+	LF_go_Stop,
+	LF_go_Start,
+	LF_Started,
+}RobotState_t;
 
-extern int T_SIL;
-extern int URUCHAMIANIE_ROBOTA;
+typedef struct
+{
+	RobotState_t RobotState;
+
+}Robot_Cntrl_t;
+
+extern Robot_Cntrl_t Robot_Cntrl;
 
 
-extern void Robot_Control();
+extern RobotState_t LF_Robot_ControlTask();
 
 #endif /* INC_URUCHAMIANIE_H_ */

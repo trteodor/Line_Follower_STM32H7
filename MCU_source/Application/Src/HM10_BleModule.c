@@ -89,33 +89,36 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	}
 	case SetPid_Kd:
 	{
-
+		PID_Module.Kd = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_Addr_PID_Kd,&PID_Module.Kd);
 	break;
 	}
 	case SetPid_Ki:
 	{
-
+		PID_Module.Ki = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_Addr_PID_Ki,&PID_Module.Ki);
 	break;
 	}
 	case SetBaseMotorSpeedValue:
 	{
-
+		PID_Module.BaseMotorSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_AddrBaseMotorSpeedValue,&PID_Module.BaseMotorSpeed);
 	break;
 	}
 		/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
 	case SaveDataVal1:
 	{
-
-	break;
+		//fall through
+//	break;
 	}
 	case SaveDataVal2:
 	{
-
+		//to define
 	break;
 	}
 	case StopSavingData:
 	{
-
+		//to define
 	break;
 	}
 	/* @@@@@ @@@@ Sensor Screen in Mobile App */
@@ -139,83 +142,99 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	/* Value from mobile App -  Weights of Error for each sensor */
 	case SensorErW_1 :
 	{
-
+		SensorModule.SensorErrorValue[0] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW1_Addr,&SensorModule.SensorErrorValue[0]);
 	break;
 	}
 	case SensorErW_2 :
 	{
-
+		SensorModule.SensorErrorValue[1] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW2_Addr,&SensorModule.SensorErrorValue[1]);
 	break;
 	}
 	case SensorErW_3 :
 	{
-
+		SensorModule.SensorErrorValue[2] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW3_Addr,&SensorModule.SensorErrorValue[2]);
 	break;
 	}
 	case SensorErW_4 :
 	{
-
+		SensorModule.SensorErrorValue[3] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW4_Addr,&SensorModule.SensorErrorValue[3]);
 	break;
 	}
 	case SensorErW_5 :
 	{
-
+		SensorModule.SensorErrorValue[4] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW5_Addr,&SensorModule.SensorErrorValue[4]);
 	break;
 	}
 	case SensorErW_6 :
 	{
-
+		SensorModule.SensorErrorValue[5] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW6_Addr,&SensorModule.SensorErrorValue[5]);
 	break;
 	}
 	case SensorErW_7 :
 	{
-
+		SensorModule.SensorErrorValue[6] = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW7_Addr,&SensorModule.SensorErrorValue[6]);
 	break;
 	}
 	case SensorErWMax :
 	{
-
+		SensorModule.SensorErrorMaxValue = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_ErrW_Max_Addr,&SensorModule.SensorErrorMaxValue);
 	break;
 	}
 	/* Value from mobile App - when the line is detected*/
 	case S1_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[0] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S1_LineIsDetV_Addr,&SensorModule.LineDetectValue[0]);
 	break;
 	}
 	case S2_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[1] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S2_LineIsDetV_Addr,&SensorModule.LineDetectValue[1]);
 	break;
 	}
 	case S3_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[2] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S3_LineIsDetV_Addr,&SensorModule.LineDetectValue[2]);
 	break;
 	}
 	case S4_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[3] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S4_LineIsDetV_Addr,&SensorModule.LineDetectValue[3]);
 	break;
 	}
 	case S5_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[4] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S5_LineIsDetV_Addr,&SensorModule.LineDetectValue[4]);
 	break;
 	}
 	case S6_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[5] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S6_LineIsDetV_Addr,&SensorModule.LineDetectValue[5]);
 	break;
 	}
 	case S7_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[6] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S7_LineIsDetV_Addr,&SensorModule.LineDetectValue[6]);
 	break;
 	}
 	case S8_LineIsDetV :
 	{
-
+		SensorModule.LineDetectValue[7] = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_S8_LineIsDetV_Addr,&SensorModule.LineDetectValue[7]);
 	break;
 	}
 	/*@@@@@ @@@@  Mobile App Screen "Adv" */
@@ -227,53 +246,62 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	}
 	case MAX_Pid_Value:
 	{
-
+		PID_Module.MAX_PID_value = atof((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_FLOAT(EEPROM_MAX_Pid_Value_Addr,&PID_Module.MAX_PID_value);
 	break;
 	}
 	case ReverseSpeed :
 	{
-
+		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case MaxSumValue_forPidKi :
 	{
-
+		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case PID_KdProbeTime :
 	{
-
+		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case Motor1TestStart :
 	{
-
+		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case Motor1TestStop :
 	{
-
+		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case Reserv3 :
 	{
-
+//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case Reserv4 :
 	{
-
+//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case IrSensor ://?
 	{
-
+//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	case LedMode :
 	{
-		int i=0;
-		UNUSED(i);
+//		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
+//		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
 	break;
 	}
 	default:

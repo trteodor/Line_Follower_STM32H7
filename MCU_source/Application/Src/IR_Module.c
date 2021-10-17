@@ -40,9 +40,6 @@ void IR_Task()
 	}
 }
 
-int znakwylaczdiode=0;
-
-
 static void IR_Decode_RemoteControlPilot()
 {
 

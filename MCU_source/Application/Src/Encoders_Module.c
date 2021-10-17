@@ -25,6 +25,24 @@ __inline void Enc_AddEncoderImpulsIntoImpulsSum(uint16_t GPIO_Pin)
 	}
 }
 
+void Enc_ResetModule()
+{
+	//this is rly wrong solution but work! :)
+//	static const Encoders_Module_t EmptyStruct;
+//	Enc_Module=EmptyStruct;
+	//finally better solution:
+	Enc_Module.LeftEncoderImpulsCount = 0;
+	Enc_Module.RightEncoderImpulsCount = 0;
+	Enc_Module.Distance_LeftWheel = 0;
+	Enc_Module.Distance_RightWheel = 0;
+	Enc_Module.ProbeNumber = 0;
+	Enc_Module.PreviousLeftEncoderImpulsCount = 0;
+	Enc_Module.PreviousRightEncoderImpulsCount = 0;
+	Enc_Module.LeftWheelSpeed = 0;
+	Enc_Module.RightWheelSpeed = 0;
+	Enc_Module.TakenDistance = 0;
+}
+
 void Enc_CalculateActualSpeed()
 {
 	static uint32_t EncodersSavedTime;
@@ -81,92 +99,5 @@ void Enc_CalculateTraveledDistance()
 }
 
 
-
-//
-//void TryDetectLapEndMark()
-//{
-//	wykr_znacznik=0;
-//
-//	if(flaga_ENK==1 && (ENK_LEWY-ZN_ENKL)!=0 )
-//	{
-//		ZN_ENKL=ENK_LEWY;
-//		D_ZENKL++;
-//	}
-//	if(flaga_ENK==1 && (ENK_PRAWY-ZN_ENKP)!=0 )
-//	{
-//		ZN_ENKP=ENK_PRAWY;
-//		D_ZENKP++;
-//	}
-//	if(D_ZENKL>=25 && D_ZENKP>=25)
-//	{
-//		//wykytro znacznik
-//
-//		D_ZENKP=0;
-//		D_ZENKL=0;
-//
-//
-//
-//		wykryto_znacznik();
-//
-//		if(mapa_dplik==1)
-//		{
-//			mapa_dplik=0;
-//			URUCHAMIANIE_ROBOTA=0; //zatrzymanie robota
-//
-//		   __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_1,1000);
-//		    __HAL_TIM_SET_COMPARE(&htim15,TIM_CHANNEL_2,1000);
-//
-//		    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,1000);
-//		    __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,1000);
-//
-//			  HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_SET);
-//			wyznacz_xiy();
-//			WYSLIJMAPE_DO_BLE();
-//
-//			P_DRSR=0;
-//			nr_probki=0;
-//			return;
-//		}
-//
-//		if(mapa_dplik==0)
-//		{
-//			HAL_GPIO_WritePin(LDD1_GPIO_Port, LDD1_Pin,GPIO_PIN_RESET);
-//			mapa_dplik=1;
-//			P_DRSR=0;
-//			nr_probki=0;
-//		}
-//	}
-//}
-
-//
-//
-//
-//
-//void wykryto_znacznik()
-//{
-//
-//	CZ_OKR=t2-zT_ZNACZNIK;
-//	CZ_OKR=CZ_OKR/10000;
-//	zT_ZNACZNIK=t2;
-//
-//	for(int i=0; i<nr_probki; i++)
-//	{
-//		PR_Srodka[i]=PREDKOSC_L_W_PROBCE[i]+PREDKOSC_P_W_PROBCE[i];
-//		if(PR_Srodka[i]!=0)
-//		{
-//		PR_Srodka[i]=PR_Srodka[i]/2;
-//		}
-//	}
-//
-//
-//	for (int i=0; i<nr_probki; i++)
-//	{
-//		Sr_Predkosc=Sr_Predkosc+PR_Srodka[i];
-//	}
-//	Sr_Predkosc=Sr_Predkosc/nr_probki;
-//
-//}
-//
-//
 
 

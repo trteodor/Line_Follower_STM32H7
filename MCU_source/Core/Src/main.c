@@ -34,7 +34,6 @@
 #include "Encoders_Module.h"
 
 #include <stdio.h>
-#include "Robot_Control.h"
 
 /* USER CODE END Includes */
 
@@ -75,7 +74,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	{
 		// Start listening again
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, HM10BLE_App.ReceiveBuffer, ReceiveBufferSize);
-		HM10BLE_RxEventCallback(Size);
+		HM10BLE_RxEventCallback(Size); //Application/Src/HM10_BleModule.c
 	}
 }
 
@@ -84,13 +83,13 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	// Check if UART2 triggered the Callback
 	if(huart->Instance == USART2)
 	{
-		HM10BLE_TxCmpltEventCallback();
+		HM10BLE_TxCmpltEventCallback(); //Application/Src/HM10_BleModule.c
 	}
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	Enc_AddEncoderImpulsIntoImpulsSum(GPIO_Pin);
+	Enc_AddEncoderImpulsIntoImpulsSum(GPIO_Pin); //Application/Src/Encoders_Module.c
 }
 
 /* USER CODE END 0 */

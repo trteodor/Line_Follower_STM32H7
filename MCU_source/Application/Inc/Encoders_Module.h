@@ -19,9 +19,6 @@ typedef struct
 	uint32_t PreviousLeftEncoderImpulsCount;
 	uint32_t PreviousRightEncoderImpulsCount;
 
-	float LeftDistanse;
-	float RightDistanse;
-
 	float LeftWheelDistanceInProbe[MaxProbeNumber];
 	float RightWheelDistanceInProbe[MaxProbeNumber];
 
@@ -40,6 +37,7 @@ typedef struct
 
 extern Encoders_Module_t Enc_Module;
 
+void Enc_ResetModule();
 void Enc_AddEncoderImpulsIntoImpulsSum(uint16_t GPIO_Pin);
 void Enc_CalculateActualSpeed();
 void Enc_CalculateTraveledDistance();

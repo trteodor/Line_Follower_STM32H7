@@ -1,6 +1,8 @@
 #ifndef _LineSensor_H
 #define _LineSensor_H
 
+#define LineIsDetectedDefValue 2500
+
 typedef struct
 {
 	float PositionErrorValue;

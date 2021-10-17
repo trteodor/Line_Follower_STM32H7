@@ -3,6 +3,7 @@
 #include "dma.h"
 
 #include "LineSensorsModule.h"
+#include "Encoders_Module.h"
 #include "EEPROM.h"
 #include "EEPROM_VarLocDef.h"
 
@@ -83,6 +84,7 @@ float SM_SensorsCalculateError()
 	//PositionErrorValue=99; //Function Error
 	return 0;
 }
+
 
 
 

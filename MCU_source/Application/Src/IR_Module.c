@@ -1,10 +1,10 @@
 #include "main.h"
 
 #include "TSOP2236_T.h"
-#include "Robot_Control.h"
 #include "IR_Module.h"
 #include "EEPROM.h"
 #include "EEPROM_VarLocDef.h"
+#include "LF_AppMain.h"
 
 IrModule_t IrModule;
 
@@ -29,11 +29,14 @@ void IR_Task()
 {
 	if(IrModule.Ir_State == Ir_Working)
 	{
-		if(RC5_ReadNormal(&TSOP2236, &TSOP_NormRecData) == RC5_OK)
-			{
-				//new data avaible
-				IR_Decode_RemoteControlPilot();
-			}
+
+		RC5_Status RC_Stat = RC5_ReadNormal(&TSOP2236, &TSOP_NormRecData);
+		if(RC_Stat == RC5_OK)
+		{
+			//new data avaible
+			IR_Decode_RemoteControlPilot();
+			HAL_GPIO_TogglePin(IR_LED_GPIO_Port, IR_LED_Pin);
+		}
 	}
 }
 

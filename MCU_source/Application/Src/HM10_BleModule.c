@@ -17,9 +17,9 @@
 #include "LineSensorsModule.h"
 #include "PID_Reg_Module.h"
 #include "ftoa_function.h"
-#include "Robot_Control.h"
 #include "IR_Module.h"
 #include "BlinkLedMod.h"
+#include "LF_AppMain.h"
 
 extern Robot_Cntrl_t Robot_Cntrl;
 
@@ -28,7 +28,7 @@ extern Robot_Cntrl_t Robot_Cntrl;
 HM10BLE_t HM10BLE_App;
 
 
-static void HM10BLE_Tx(uint8_t *pData, uint16_t Size);
+void HM10BLE_Tx(uint8_t *pData, uint16_t Size);
 static Ble_AppStatus SendActualLineSensorDataFun();
 static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun();
 static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun();
@@ -311,12 +311,12 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	{
 		LedBlinkState = atof((char *)HM10BLE_App.ReceiveBuffer);
 		uint32_t tmpLed_state = LedBlinkState;
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,(int *)&tmpLed_state);
+		EEPROM_WRITE_INT(EEPROM_LedModeState_Addr,(int *)&tmpLed_state);
 	break;
 	}
 	default:
 	{
-		//error
+		//error or undefinded command
 	break;
 	}
 	}

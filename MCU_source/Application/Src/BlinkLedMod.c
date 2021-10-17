@@ -17,7 +17,7 @@ void BlinkLedTask()
 	static uint32_t BlinkSavedTime;
 
 
-	if(LED_Active)
+	if(LedBlinkState == LED_Active)
 	{
 
 	  if( BlinkSavedTime+LED_TOGGLE_TIME < HAL_GetTick())

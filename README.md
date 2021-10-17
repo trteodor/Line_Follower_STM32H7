@@ -5,7 +5,7 @@ This repository contains all data for my first serious microcontroller project -
 This project was created over than 1 years ago, now I decide to refactor MCU source code and publish the project.
 
 Link to the demo video: 
-* **_https://youtu.be/MG3MgTwvwnU_**
+* **_ ---in november 2021 will be avaible probably :) _**
 
 I speak in Polish league on the video.
 
@@ -15,6 +15,9 @@ I speak in Polish league on the video.
 
 # Few Pictures :
 ![RobotPic1](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/20210125_161132.jpg)
+
+General Concept of the robot:
+![Gen Concept](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/General%20Concept%20of%20LF_v5.png)
 ![RobotPic2](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/20210125_161158.jpg)
 ![ApkaiRobot](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/ApkaiRobot.PNG)
 ![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/NaTorze.PNG)

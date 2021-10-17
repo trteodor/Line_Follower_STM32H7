@@ -10,7 +10,7 @@ Link to the demo video:
 I speak in Polish league on the video.
 
 * Detailed description in polish leanguage:
- https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
+*https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
 
 * This repository contains all the necessary data needed to build the Robot (Hardware Layer), the source code of the microcontroller, and the source code of the mobile application.
 

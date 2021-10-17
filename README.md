@@ -7,11 +7,11 @@ This project was created over than 1 years ago, now I decide to refactor MCU sou
 Link to the demo video: 
 * **_ ---in november 2021 will be avaible probably :) _**
 
-I speak in Polish league on the video.
+* I speak in Polish league on the video.
 
-* Detailed description in polish leanguage:
+Detailed description in polish leanguage:
 
-https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
+* https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
 
 * This repository contains all the necessary data needed to build the Robot (Hardware Layer), the source code of the microcontroller, and the source code of the mobile application.
 

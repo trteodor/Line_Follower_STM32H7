@@ -13,7 +13,7 @@ Detailed description in polish leanguage:
 
 * https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
 
-This repository contains all the necessary data needed to build the Robot (Hardware Layer), the source code of the microcontroller, and the source code for the mobile application.
+This repository contains all the necessary data needed to build the Robot (Hardware Layer), the source code for the microcontroller, and the source code for the mobile application.
 
 * A lot of things in this project can be done better, but it is done as is :)
 

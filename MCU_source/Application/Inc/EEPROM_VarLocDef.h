@@ -13,6 +13,7 @@
 #define EEPROM_Addr_PID_Kd 55
 #define EEPROM_AddrBaseMotorSpeedValue 60
 #define EEPROM_Addr_PID_Ki 65
+#define EEPROM_PID_KdProbeTime_Addr 420
 
 #define EEPROM_ErrW1_Addr 70
 #define EEPROM_ErrW2_Addr 75
@@ -33,12 +34,6 @@
 #define EEPROM_S7_LineIsDetV_Addr 230
 #define EEPROM_S8_LineIsDetV_Addr 235
 
-#define EEPROM_MAX_Pid_Value_Addr 400
-#define EEPROM_ReverseSpeed_Addr 405
-#define EEPROM_MaxSumValue_forPidKi_Addr 410
-#define EEPROM_PID_KdProbeTime_Addr 420
-#define EEPROM_Reserv3_Addr 440
-#define EEPROM_Reserv4_Addr 445
 
 #define EEPROM_IrSensorState_Addr 450
 

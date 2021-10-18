@@ -334,7 +334,6 @@ static void LeftMotorDrivingReverse(int LeftMotorSpeed, int RightMotorSpeed)
 	  __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxPWMValue);
 }
 
-
 void Motor_PWM_Init()
 {
     HAL_TIM_PWM_Start(&htim15, TIM_CHANNEL_1);

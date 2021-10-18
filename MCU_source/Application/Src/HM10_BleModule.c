@@ -252,54 +252,12 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 		HM10BLE_App.ActualStateCallBack = SendActualDataFor_Adv_ScreenToM_AppFun;
 	break;
 	}
-	case MAX_Pid_Value:
-	{
-		PID_Module.MAX_PID_value = atof((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_FLOAT(EEPROM_MAX_Pid_Value_Addr,&PID_Module.MAX_PID_value);
-	break;
-	}
-	case ReverseSpeed :
-	{
-		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-	break;
-	}
-	case MaxSumValue_forPidKi :
-	{
-		PID_Module.Ki_Sum_MaxVal = atoi((char *)HM10BLE_App.ReceiveBuffer);
-		EEPROM_WRITE_FLOAT(EEPROM_MaxSumValue_forPidKi_Addr,&PID_Module.Ki_Sum_MaxVal);
-	break;
-	}
 	case PID_KdProbeTime :
 	{
 		PID_Module.PID_DerivativeTime = atoi((char *)HM10BLE_App.ReceiveBuffer);
 		EEPROM_WRITE_INT(EEPROM_PID_KdProbeTime_Addr,&PID_Module.PID_DerivativeTime);
 	break;
 	}
-//	case Motor1TestStart :
-//	{
-//		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-//	break;
-//	}
-//	case Motor1TestStop :
-//	{
-//		PID_Module.ReverseSpeed = atoi((char *)HM10BLE_App.ReceiveBuffer);
-//		EEPROM_WRITE_INT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-//	break;
-//	}
-//	case Reserv3 :
-//	{
-////		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-////		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-//	break;
-//	}
-//	case Reserv4 :
-//	{
-////		PID_Module.ReverseSpeed = atof((char *)HM10BLE_App.ReceiveBuffer);
-////		EEPROM_WRITE_FLOAT(EEPROM_ReverseSpeed_Addr,&PID_Module.ReverseSpeed);
-//	break;
-//	}
 	case IrSensor ://?
 	{
 		IrModule.Ir_State = atoi((char *)HM10BLE_App.ReceiveBuffer);
@@ -342,40 +300,7 @@ static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun()
 			 after_con_val[i]=0;
 		 }
 
-
 		  if (DataToSendQueue==1){
-		  ftoa(PID_Module.MAX_PID_value,after_con_val ,2);
-		  strcat(after_con_val, MAX_Pid_Value_d);
-		  strcat(BuffToBLE,after_con_val );
-		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==2){
-		  ftoa(PID_Module.ReverseSpeed,after_con_val ,2);
-		  strcat(after_con_val, ReverseSpeed_d);
-		  strcat(BuffToBLE,after_con_val );
-		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==3){
-		  ftoa(PID_Module.Ki_Sum_MaxVal,after_con_val ,2);
-		  strcat(after_con_val, MaxSumValue_forPidKi_d);
-		  strcat(BuffToBLE,after_con_val );
-		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==4){
-		  ftoa(PID_Module.PID_DerivativeTime,after_con_val ,2);
-		  strcat(after_con_val, PID_KdProbeTime_dd);
-		  strcat(BuffToBLE,after_con_val );
-		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
-		  DataToSendQueue++;
-		  return BLE_OK;
-		  }
-		  if (DataToSendQueue==5){
 		  itoa(IrModule.Ir_State,after_con_val ,10);
 		  strcat(after_con_val, IrSensor_d);
 		  strcat(BuffToBLE,after_con_val );
@@ -383,7 +308,7 @@ static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun()
 		  DataToSendQueue++;
 		  return BLE_OK;
 		  }
-		  if (DataToSendQueue==6){
+		  if (DataToSendQueue==2){
 		  itoa(LedBlinkState,after_con_val ,10);
 		  strcat(after_con_val, LedMode_d);
 		  strcat(BuffToBLE,after_con_val );

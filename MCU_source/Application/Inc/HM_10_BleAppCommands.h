@@ -23,6 +23,7 @@ typedef enum
 	SetPid_Kp = '+',
 	SetPid_Kd = '-',
 	SetPid_Ki = '(',
+	PID_KdProbeTime ='w', //setpidKdProbeTime
 	SetBaseMotorSpeedValue = ')',
 	/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
 	SaveDataVal1 = 147,
@@ -52,10 +53,6 @@ typedef enum
 	S8_LineIsDetV = 'Y',
 	/*@@@@@ @@@@  Mobile App Screen "Adv" */
 	PrintActualDataFor_Adv_ScreenToM_App ='X',
-	MAX_Pid_Value ='g',
-	ReverseSpeed ='h',
-	MaxSumValue_forPidKi ='q',
-	PID_KdProbeTime ='w',
 	IrSensor ='j', //?
 	LedMode ='J', //?
 
@@ -107,25 +104,22 @@ typedef enum
 
 
 /*@@@@@ @@@@  Mobile App Screen "Adv" (same as commands)*/
-#define MAX_Pid_Value_d "g"
-#define ReverseSpeed_d "h"
-#define MaxSumValue_forPidKi_d "q"
-#define PID_KdProbeTime_dd "w"
 #define IrSensor_d "j" //?
 #define LedMode_d "J" //?
 
 
-//UNUSED: totally
-//#define  "e"
-//#define  "`"
-//#define  "t"
-//#define  "y"
-//It was used as:
-//	Motor1TestStart ='e',
-//	Motor1TestStop ='`',
-//	Reserv3 ='t',
-//	Reserv4 ='y',
-//maybe some more marks are avaible I dk.
+//USED but still not def in this file:
+
+//q ButtonMapState when receive LabelMapState when sending to mobile App
+//h textbox reserv receing and sending
+
+//g TextBoxTryDetEndLineMark Receive and sending
+
+//f Lap_TimeVar only sending to mobile App
+//y Av_SpeedVar only sending to mobile App
+
+//UNUSED: totally now
+// e ` t
 
 
 

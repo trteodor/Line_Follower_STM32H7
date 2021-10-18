@@ -133,9 +133,6 @@ static void CheckDoesNotExceedTheMaximumPWMValue()
 
 static void EEPROM_PID_Data_Read()
 {
-	EEPROM_READ_FLOAT(EEPROM_MAX_Pid_Value_Addr, &PID_Module.MAX_PID_value);
-	EEPROM_READ_FLOAT(EEPROM_MaxSumValue_forPidKi_Addr, &PID_Module.Ki_Sum_MaxVal);
-	EEPROM_READ_INT(EEPROM_ReverseSpeed_Addr, &PID_Module.ReverseSpeed);
 	EEPROM_READ_INT(EEPROM_PID_KdProbeTime_Addr, &PID_Module.PID_DerivativeTime);
 	EEPROM_READ_FLOAT(EEPROM_Addr_PID_Kp, &PID_Module.Kp);
 	EEPROM_READ_FLOAT(EEPROM_Addr_PID_Kd, &PID_Module.Kd);

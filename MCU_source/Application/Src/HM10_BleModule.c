@@ -20,6 +20,7 @@
 #include "IR_Module.h"
 #include "BlinkLedMod.h"
 #include "LF_AppMain.h"
+#include "Encoders_Module.h"
 
 extern Robot_Cntrl_t Robot_Cntrl;
 
@@ -34,6 +35,8 @@ static Ble_AppStatus SendActualErrorWeightsAndWhenLineIsDetectedFun();
 static Ble_AppStatus SendActualPID_AndCalcMotor_DataFun();
 static Ble_AppStatus SendActualPidSettingsFun();
 static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun();
+static Ble_AppStatus CreateAndSendTrackMapToMobileApp();
+static Ble_AppStatus SendActualMapStateToMAppFun();
 
 void HM10BLE_Init()
 {
@@ -71,20 +74,23 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	break;
 	}
 	/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
-
+	case ButtonMapState:
+	{
+		HM10BLE_App.Ble_AppSt = SendingDataToMobAppOneTime;
+		HM10BLE_App.ActualStateCallBack = SendActualMapStateToMAppFun;
+		break;
+	}
 	case SaveDataVal1://fallthrough
 	case SaveDataVal2:
 	{
-		int i=0;
-		UNUSED(i);
-		//to define
+		HM10BLE_App.Ble_AppSt = SendingDataToMobAppOneTime;
+		HM10BLE_App.ActualStateCallBack = CreateAndSendTrackMapToMobileApp;
 	break;
 	}
 	case StopSavingData:
 	{
-		int i=0;
-		UNUSED(i);
-		//to define
+		HM10BLE_App.Ble_AppSt=Idle;
+		HM10BLE_App.ActualStateCallBack = NULL;
 	break;
 	}
 	/* @@@@@ @@@@ "Basic" Screen in Mobile App */
@@ -272,12 +278,87 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 		EEPROM_WRITE_INT(EEPROM_LedModeState_Addr,(int *)&tmpLed_state);
 	break;
 	}
+	case TryDetectEndLineMark:
+	{
+		Robot_Cntrl.TryDetEndLapMarkState = atoi((char *)HM10BLE_App.ReceiveBuffer);
+		uint32_t tmpLed_state = Robot_Cntrl.TryDetEndLapMarkState;
+		EEPROM_WRITE_INT(EEPROM_TryDetectEndLineMark_Addr,(int *)&tmpLed_state);
+		break;
+	}
+	case ReservAdvScr:
+	{
+		//to define
+		break;
+	}
 	default:
 	{
 		//error or undefinded command
 	break;
 	}
 	}
+}
+
+static Ble_AppStatus CreateAndSendTrackMapToMobileApp()
+{
+	uint8_t SEND_DATA_IN_FILE[40];
+
+	Create_XY_PositionMap();
+
+	if(0) //another parts of the App must be defided to use it! :)
+	{
+		static uint32_t  SavedTimeToFile=0;
+
+
+		sprintf((char *) SEND_DATA_IN_FILE,"X,Y,D_LM,D_RM\n\r");
+		 HM10BLE_Tx(SEND_DATA_IN_FILE, sizeof(SEND_DATA_IN_FILE));
+
+		for(int i=0; i<Enc_Module.ProbeNumber; i=i) //BLOCKING SENDING DATA!!!!
+		{
+
+		if(SavedTimeToFile+30 <  HAL_GetTick() )
+			{
+			SavedTimeToFile=HAL_GetTick();
+					i++;
+
+				sprintf((char *) SEND_DATA_IN_FILE,"%f,%f,%f,%f\n\r",PositionOnTrack.X[i],PositionOnTrack.Y[i],
+							Enc_Module.LeftWheelDistanceInProbe[i],Enc_Module.RightWheelDistanceInProbe[i] );
+				 HM10BLE_Tx(SEND_DATA_IN_FILE, sizeof(SEND_DATA_IN_FILE));
+			}
+		}
+	}
+	  return GoToIdle;
+}
+
+static Ble_AppStatus SendActualMapStateToMAppFun()
+{
+	static int DataToSendQueue=1;
+	static uint32_t SaveTime_BLE;
+	static char BuffToBLE[20];
+	static char after_con_val[20];
+	if(HM10BLE_App.BleTxState==BLE_TX_Busy)
+	{
+		return BLE_OK; //wait for ready
+	}
+	if ( HAL_GetTick() - SaveTime_BLE >= TimeBeetweenNextDataPart)
+	{
+		SaveTime_BLE = HAL_GetTick();
+
+		 for (int i=0; i<20; i++)
+		 {
+			 BuffToBLE[i]=0;
+			 after_con_val[i]=0;
+		 }
+
+		  if (DataToSendQueue==1){
+		  itoa(Robot_Cntrl.IsMapAvailable,after_con_val ,10);
+		  strcat(after_con_val, ButtonMapState_d);
+		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+		  DataToSendQueue=1;
+		  return GoToIdle;
+		  }
+	}
+	return BLE_OK;
 }
 
 static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun()
@@ -311,6 +392,22 @@ static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun()
 		  if (DataToSendQueue==2){
 		  itoa(LedBlinkState,after_con_val ,10);
 		  strcat(after_con_val, LedMode_d);
+		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+		  DataToSendQueue++;
+		  return BLE_OK;
+		  }
+		  if (DataToSendQueue==3){
+		  itoa(Robot_Cntrl.TryDetEndLapMarkState,after_con_val ,10);
+		  strcat(after_con_val, TextBoxTryDetEndLineMark);
+		  strcat(BuffToBLE,after_con_val );
+		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+		  DataToSendQueue++;
+		  return BLE_OK;
+		  }
+		  if (DataToSendQueue==4){
+		  after_con_val[0]='0'; //Reserved
+		  strcat(after_con_val, ReservAdvScr_d);
 		  strcat(BuffToBLE,after_con_val );
 		  HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 		  DataToSendQueue=1;

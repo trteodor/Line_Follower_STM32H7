@@ -26,6 +26,7 @@ typedef enum
 	PID_KdProbeTime ='w', //setpidKdProbeTime
 	SetBaseMotorSpeedValue = ')',
 	/* @@@@@ @@@@ Commands for Save data to .txt file on Phone */
+	ButtonMapState='q',
 	SaveDataVal1 = 147,
 	SaveDataVal2 = 134,
 	StopSavingData = 146,
@@ -55,9 +56,14 @@ typedef enum
 	PrintActualDataFor_Adv_ScreenToM_App ='X',
 	IrSensor ='j', //?
 	LedMode ='J', //?
+	TryDetectEndLineMark='g',
+	ReservAdvScr ='h',
 
 
 }HM10BleCommand_t;
+
+
+
 
 
 /* Send to mobile app commands*/
@@ -71,6 +77,10 @@ typedef enum
 #define PID_KdComm "k"
 #define BaseMotorSpeed_d "m"
 #define PID_KdProbeTime_d "w"
+
+//Labels to send when End Lap Mark Detected or Button Stop Clicked
+#define Lap_TimeVar_d "f"
+#define Av_SpeedVar_d "y"
 
 /* Send Error Weights for each sensor to mobile App commands*/
 #define S_LineErWToM_App_1 "*"
@@ -100,23 +110,15 @@ typedef enum
 #define S_Line_7_Data_ToM_App_Comm "CZ7:"
 #define S_Line_8_Data_ToM_App_Comm "CZ8:"
 #define ActualPositionError_SS "ERROR:"
-
+/* Screen Map to File*/
+#define ButtonMapState_d "q"
 
 
 /*@@@@@ @@@@  Mobile App Screen "Adv" (same as commands)*/
 #define IrSensor_d "j" //?
 #define LedMode_d "J" //?
-
-
-//USED but still not def in this file:
-
-//q ButtonMapState when receive LabelMapState when sending to mobile App
-//h textbox reserv receing and sending
-
-//g TextBoxTryDetEndLineMark Receive and sending
-
-//f Lap_TimeVar only sending to mobile App
-//y Av_SpeedVar only sending to mobile App
+#define TextBoxTryDetEndLineMark "g" //?
+#define ReservAdvScr_d "h"
 
 //UNUSED: totally now
 // e ` t

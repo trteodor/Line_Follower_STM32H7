@@ -98,6 +98,33 @@ void Enc_CalculateTraveledDistance()
 	}
 }
 
+static void CalculatAverageSpeed()
+{
+
+//
+//
+//	CZ_OKR=t2-zT_ZNACZNIK;
+//	CZ_OKR=CZ_OKR/10000;
+//	zT_ZNACZNIK=t2;
+//
+//	for(int i=0; i<nr_probki; i++)
+//	{
+//		PR_Srodka[i]=PREDKOSC_L_W_PROBCE[i]+PREDKOSC_P_W_PROBCE[i];
+//		if(PR_Srodka[i]!=0)
+//		{
+//		PR_Srodka[i]=PR_Srodka[i]/2;
+//		}
+//	}
+//
+//
+//	for (int i=0; i<nr_probki; i++)
+//	{
+//		Sr_Predkosc=Sr_Predkosc+PR_Srodka[i];
+//	}
+//	Sr_Predkosc=Sr_Predkosc/nr_probki;
+
+}
+
 
 
 

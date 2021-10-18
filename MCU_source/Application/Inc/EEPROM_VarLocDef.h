@@ -39,5 +39,7 @@
 
 #define EEPROM_LedModeState_Addr 455
 
+#define EEPROM_TryDetectEndLineMark_Addr 460
+
 
 #endif

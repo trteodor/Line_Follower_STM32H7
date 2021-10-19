@@ -17,6 +17,7 @@ typedef enum
 	Idle,
 	SendingDataToMobAppOneTime,
 	ContinuousCyclicSendingData,
+	SendDrivingTimeAndAvSpeed,
 }Ble_AppStatus;
 
 typedef enum

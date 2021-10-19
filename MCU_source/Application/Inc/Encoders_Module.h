@@ -5,6 +5,7 @@
 #include "stdint.h"
 
 #define MaxProbeNumber 4000
+#define EncodersProbeTime 200 //20ms
 
 typedef struct
 {
@@ -26,11 +27,12 @@ typedef struct
 	float LeftWheelSpeed;
 	float RightWheelSpeed;
 
+	float SpeedInProbe[MaxProbeNumber];
 	float LeftWheelSpeedInProbe[MaxProbeNumber];
 	float RightWheelSpeedInProbe[MaxProbeNumber];
-
-
 	float TakenDistanceInProbe[MaxProbeNumber];
+
+	float AverageSpeed;
 	float TakenDistance;
 
 }Encoders_Module_t ;
@@ -41,5 +43,6 @@ void Enc_ResetModule();
 void Enc_AddEncoderImpulsIntoImpulsSum(uint16_t GPIO_Pin);
 void Enc_CalculateActualSpeed();
 void Enc_CalculateTraveledDistance();
+void Enc_CalculateFinalAverageSpeed();
 
 #endif //_Encoders_Module_H

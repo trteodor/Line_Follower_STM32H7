@@ -57,6 +57,15 @@ typedef struct
 	TrackMapActions_t TrackMapActions;
 	bool EndLapMarkDetection;
 	bool IsMapAvailable;
+	bool IsFlagStartedForDrivingTime;
+
+	float RobotStartTime;
+	float RobotStopTime;
+	float RobotRunTime;
+
+	uint32_t SavedCountEncProbeNumerWhenRStopped;
+
+
 }Robot_Cntrl_t;
 
 void Create_XY_PositionMap();

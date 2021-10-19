@@ -170,7 +170,7 @@ static void CalculateDrivingTimeFun()
 		Robot_Cntrl.RobotRunTime=(Robot_Cntrl.RobotStopTime-Robot_Cntrl.RobotStartTime)/1000; //1000 to seconds
 //		Enc_CalculateTraveledDistance();
 		Enc_CalculateFinalAverageSpeed();
-
+		Robot_Cntrl.SavedCountEncProbeNumerWhenRStopped=Enc_Module.ProbeNumber;
 		Robot_Cntrl.IsMapAvailable=true;
 
 		HM10BLE_App.Ble_AppSt=SendDrivingTimeAndAvSpeed; //just flag for BleTask

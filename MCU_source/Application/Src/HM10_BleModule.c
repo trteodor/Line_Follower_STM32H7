@@ -362,32 +362,37 @@ static void SendDrivingTimeAndAvSpeedFun()
 
 static Ble_AppStatus CreateAndSendTrackMapToMobileApp()
 {
-	uint8_t SEND_DATA_IN_FILE[40];
+	static uint8_t SEND_DATA_IN_FILE[100];
 
 	Create_XY_PositionMap();
 
-	if(0) //another parts of the App must be defided to use it! :)
-	{
-		static uint32_t  SavedTimeToFile=0;
+
+		uint32_t  SavedTimeFileLoc=HAL_GetTick();
 
 
-		sprintf((char *) SEND_DATA_IN_FILE,"X,Y,D_LM,D_RM\n\r");
+		sprintf((char *) SEND_DATA_IN_FILE,"X,Y,Dist_LWheel,Dist_RWheel (In Probe)\n\r" //EncodersProbeTime
+				"");
 		 HM10BLE_Tx(SEND_DATA_IN_FILE, sizeof(SEND_DATA_IN_FILE));
-
-		for(int i=0; i<Enc_Module.ProbeNumber; i=i) //BLOCKING SENDING DATA!!!!
+		 HAL_Delay(50);
+		for(int i=1; i < Robot_Cntrl.SavedCountEncProbeNumerWhenRStopped; i++) //BLOCKING SENDING DATA!!!!
 		{
-
-		if(SavedTimeToFile+30 <  HAL_GetTick() )
+			while(HM10BLE_App.BleTxState!= BLE_TX_Ready)
 			{
-			SavedTimeToFile=HAL_GetTick();
-					i++;
 
-				sprintf((char *) SEND_DATA_IN_FILE,"%f,%f,%f,%f\n\r",PositionOnTrack.X[i],PositionOnTrack.Y[i],
-							Enc_Module.LeftWheelDistanceInProbe[i],Enc_Module.RightWheelDistanceInProbe[i] );
-				 HM10BLE_Tx(SEND_DATA_IN_FILE, sizeof(SEND_DATA_IN_FILE));
 			}
+
+			while(SavedTimeFileLoc+15 >  HAL_GetTick() )
+			{
+				//wait
+			}
+			SavedTimeFileLoc=HAL_GetTick();
+
+				uint8_t sizeBlM = sprintf((char *) SEND_DATA_IN_FILE,"%f,%f,%f,%f\n\r",PositionOnTrack.X[i],PositionOnTrack.Y[i],
+							Enc_Module.LeftWheelDistanceInProbe[i],Enc_Module.RightWheelDistanceInProbe[i] );
+				HM10BLE_App.BleTxState = BLE_TX_Busy;
+				 HM10BLE_Tx(SEND_DATA_IN_FILE, sizeBlM);
 		}
-	}
+
 	  return GoToIdle;
 }
 

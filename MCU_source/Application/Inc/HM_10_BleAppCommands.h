@@ -81,6 +81,7 @@ typedef enum
 //Labels to send when End Lap Mark Detected or Button Stop Clicked
 #define Lap_TimeVar_d "f"
 #define Av_SpeedVar_d "y"
+#define DistanceVal_d "e"
 
 /* Send Error Weights for each sensor to mobile App commands*/
 #define S_LineErWToM_App_1 "*"
@@ -121,7 +122,7 @@ typedef enum
 #define ReservAdvScr_d "h"
 
 //UNUSED: totally now
-// e ` t
+// ` t
 
 
 

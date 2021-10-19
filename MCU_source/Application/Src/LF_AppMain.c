@@ -36,12 +36,7 @@ static RobotState_t TryDetectLapEndMark();
 static RobotState_t LF_Robot_ControlTask();
 static void EEPROM_ReadTryDetectEndLineMarkState();
 static void Speed_ProfileFunction();
-
-static uint32_t RobotRunTime;
-static uint32_t RobotStartTime;
-static float RobotStopTime;
-
-
+static void CalculateDrivingTimeFun();
 
 void LF_App_MainConfig(void)
 {
@@ -63,7 +58,6 @@ void LF_App_MainTask(void) //only one Task without any RTOS, all works fine -- f
 	Speed_ProfileFunction();
 	PID_Task();
 	BlinkLedTask();
-
 
 	//Functions definded in this file
 	LF_Robot_ControlTask();
@@ -94,6 +88,13 @@ static RobotState_t LF_Robot_ControlTask()
 				Robot_Cntrl.EndLapMarkDetection=false;
 
 				LF_Robot_Stop();
+
+				if(Robot_Cntrl.IsFlagStartedForDrivingTime==true)
+				{
+					Robot_Cntrl.IsFlagStartedForDrivingTime=false;
+					CalculateDrivingTimeFun();
+				}
+
 				Robot_Cntrl.RobotState = LF_Idle;
 			}
 	}
@@ -101,6 +102,11 @@ static RobotState_t LF_Robot_ControlTask()
 	if(Robot_Cntrl.RobotState == LF_go_Stop) //Bluetooth or Ir Rec Can set the state
 	{
 		LF_Robot_Stop();
+		if(Robot_Cntrl.IsFlagStartedForDrivingTime==true)
+		{
+			Robot_Cntrl.IsFlagStartedForDrivingTime=false;
+			CalculateDrivingTimeFun();
+		}
 		Robot_Cntrl.RobotState = LF_Idle;
 	}
 
@@ -109,8 +115,9 @@ static RobotState_t LF_Robot_ControlTask()
 		//All falgs/values to reset state...
 		Robot_Cntrl.EndLapMarkStates=ResetState;
 		Robot_Cntrl.IsMapAvailable=false;
+		Robot_Cntrl.IsFlagStartedForDrivingTime=true;
 		Enc_ResetModule(); //reset Encoder module to zero (all struct fields to zero)
-		RobotStartTime=HAL_GetTick(); //save start time..
+		Robot_Cntrl.RobotStartTime=HAL_GetTick(); //save start time..
 		Robot_Cntrl.RobotState = LF_Started;
 	}
 
@@ -156,6 +163,19 @@ void Create_XY_PositionMap()
 	}
 }
 
+static void CalculateDrivingTimeFun()
+{
+	//Calculate driving time
+		Robot_Cntrl.RobotStopTime=HAL_GetTick();
+		Robot_Cntrl.RobotRunTime=(Robot_Cntrl.RobotStopTime-Robot_Cntrl.RobotStartTime)/1000; //1000 to seconds
+//		Enc_CalculateTraveledDistance();
+		Enc_CalculateFinalAverageSpeed();
+
+		Robot_Cntrl.IsMapAvailable=true;
+
+		HM10BLE_App.Ble_AppSt=SendDrivingTimeAndAvSpeed; //just flag for BleTask
+}
+
 static void LF_Robot_Stop()
 {
 	//Motors Off
@@ -164,19 +184,6 @@ static void LF_Robot_Stop()
 
     __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_3,MaxPWMValue);
     __HAL_TIM_SET_COMPARE(&htim4,TIM_CHANNEL_4,MaxPWMValue);
-
-
-//Calculate driving time
-	RobotStopTime=HAL_GetTick();
-	RobotRunTime=(RobotStopTime-RobotStartTime)/1000; //1000 to seconds
-
-	Robot_Cntrl.IsMapAvailable=true;
-
-
-	//send the Driving Time to mobile App and Average Speed
-	//here i should only set flag for Ble mod, and the ble module will send
-	//this data to phone... using corresponding function
-
 
 }
 
@@ -241,6 +248,8 @@ static RobotState_t TryDetectLapEndMark()
 	}
 	return LF_Ok;
 }
+
+
 
 static void Decode_PID()
 {

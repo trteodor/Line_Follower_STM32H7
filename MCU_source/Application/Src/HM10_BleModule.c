@@ -37,6 +37,7 @@ static Ble_AppStatus SendActualPidSettingsFun();
 static Ble_AppStatus SendActualDataFor_Adv_ScreenToM_AppFun();
 static Ble_AppStatus CreateAndSendTrackMapToMobileApp();
 static Ble_AppStatus SendActualMapStateToMAppFun();
+static void SendDrivingTimeAndAvSpeedFun();
 
 void HM10BLE_Init()
 {
@@ -46,6 +47,17 @@ void HM10BLE_Init()
 
 void HM10Ble_Task()
 {
+	if(HM10BLE_App.Ble_AppSt == SendDrivingTimeAndAvSpeed)
+	{
+		SendDrivingTimeAndAvSpeedFun();
+		HM10BLE_App.Ble_AppSt = Idle;
+	}
+
+		//send the Driving Time to mobile App and Average Speed
+		//here i should only set flag for Ble mod, and the ble module will send
+		//this data to phone... using corresponding function
+
+
 	if(HM10BLE_App.ActualStateCallBack != NULL  && HM10BLE_App.Ble_AppSt != Idle)
 	{
 		if(HM10BLE_App.ActualStateCallBack() != BLE_OK)
@@ -57,6 +69,7 @@ void HM10Ble_Task()
 		}
 	}
 }
+
 
 void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 {
@@ -296,6 +309,55 @@ void HM10Ble_ExecuteCommand(HM10BleCommand_t HM10BLE_Command)
 	break;
 	}
 	}
+}
+
+static void SendDrivingTimeAndAvSpeedFun()
+{
+	static char BuffToBLE[20];
+	static char after_con_val[20];
+
+	for (int i=0; i<20; i++)
+	{
+	BuffToBLE[i]=0;
+	after_con_val[i]=0;
+	}
+
+	ftoa(Robot_Cntrl.RobotRunTime,after_con_val ,2);
+	strcat(after_con_val, Lap_TimeVar_d);
+	strcat(BuffToBLE,after_con_val );
+	HM10BLE_App.BleTxState=BLE_TX_Busy;
+	HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+	Robot_Cntrl.RobotRunTime=0; //to make sure to don;t send false data
+
+	while(HM10BLE_App.BleTxState==BLE_TX_Busy)
+	{
+	//blocking mode
+	}
+	for (int i=0; i<20; i++)
+	{
+	BuffToBLE[i]=0;
+	after_con_val[i]=0;
+	}
+	ftoa(Enc_Module.AverageSpeed,after_con_val ,2);
+	strcat(after_con_val, Av_SpeedVar_d);
+	strcat(BuffToBLE,after_con_val );
+	HM10BLE_App.BleTxState=BLE_TX_Busy;
+	HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
+
+	while(HM10BLE_App.BleTxState==BLE_TX_Busy)
+	{
+	//blocking mode
+	}
+	for (int i=0; i<20; i++)
+	{
+	BuffToBLE[i]=0;
+	after_con_val[i]=0;
+	}
+	ftoa(Enc_Module.TakenDistance,after_con_val ,2);
+	strcat(after_con_val, DistanceVal_d);
+	strcat(BuffToBLE,after_con_val );
+	HM10BLE_App.BleTxState=BLE_TX_Busy;
+	HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 }
 
 static Ble_AppStatus CreateAndSendTrackMapToMobileApp()

@@ -168,7 +168,7 @@ static void CalculateDrivingTimeFun()
 	//Calculate driving time
 		Robot_Cntrl.RobotStopTime=HAL_GetTick();
 		Robot_Cntrl.RobotRunTime=(Robot_Cntrl.RobotStopTime-Robot_Cntrl.RobotStartTime)/1000; //1000 to seconds
-//		Enc_CalculateTraveledDistance();
+		Enc_CalculateTraveledDistance();
 		Enc_CalculateFinalAverageSpeed();
 		Robot_Cntrl.SavedCountEncProbeNumerWhenRStopped=Enc_Module.ProbeNumber;
 		Robot_Cntrl.IsMapAvailable=true;

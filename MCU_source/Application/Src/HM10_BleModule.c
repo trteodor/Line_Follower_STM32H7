@@ -329,10 +329,7 @@ static void SendDrivingTimeAndAvSpeedFun()
 	HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 	Robot_Cntrl.RobotRunTime=0; //to make sure to don;t send false data
 
-	while(HM10BLE_App.BleTxState==BLE_TX_Busy)
-	{
-	//blocking mode
-	}
+	HAL_Delay(20);
 	for (int i=0; i<20; i++)
 	{
 	BuffToBLE[i]=0;
@@ -344,10 +341,7 @@ static void SendDrivingTimeAndAvSpeedFun()
 	HM10BLE_App.BleTxState=BLE_TX_Busy;
 	HM10BLE_Tx((uint8_t *)BuffToBLE, sizeof(BuffToBLE));
 
-	while(HM10BLE_App.BleTxState==BLE_TX_Busy)
-	{
-	//blocking mode
-	}
+	HAL_Delay(20);
 	for (int i=0; i<20; i++)
 	{
 	BuffToBLE[i]=0;
@@ -376,12 +370,8 @@ static Ble_AppStatus CreateAndSendTrackMapToMobileApp()
 		 HAL_Delay(50);
 		for(int i=1; i < Robot_Cntrl.SavedCountEncProbeNumerWhenRStopped; i++) //BLOCKING SENDING DATA!!!!
 		{
-			while(HM10BLE_App.BleTxState!= BLE_TX_Ready)
-			{
 
-			}
-
-			while(SavedTimeFileLoc+15 >  HAL_GetTick() )
+			while(SavedTimeFileLoc+20 >  HAL_GetTick() )
 			{
 				//wait
 			}

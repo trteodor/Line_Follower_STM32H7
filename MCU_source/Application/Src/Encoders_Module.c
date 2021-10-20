@@ -89,11 +89,8 @@ void Enc_CalculateActualSpeed()
 			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			Enc_Module.SpeedInProbe[Enc_Module.ProbeNumber]=Enc_Module.SpeedInProbe[Enc_Module.ProbeNumber] / 2;
 		}
-
-
-
-		Enc_Module.ProbeNumber++;
 		Enc_CalculateTraveledDistance();
+		Enc_Module.ProbeNumber++;
 	}
 
 	return;
@@ -101,7 +98,7 @@ void Enc_CalculateActualSpeed()
 
 void Enc_CalculateFinalAverageSpeed()
 {
-	for(int i=0; i < Enc_Module.ProbeNumber-1; i++)
+	for(int i=0; i < Enc_Module.ProbeNumber; i++)
 		{
 			if(Enc_Module.SpeedInProbe[i] != 0)
 			{
@@ -113,14 +110,15 @@ void Enc_CalculateFinalAverageSpeed()
 
 void Enc_CalculateTraveledDistance()
 {
-		Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber-1] =
-				Enc_Module.LeftWheelDistanceInProbe[Enc_Module.ProbeNumber-1] +
-					Enc_Module.RightWheelDistanceInProbe[Enc_Module.ProbeNumber-1];
-			if(Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber-1] != 0)
+		Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber] =
+				Enc_Module.LeftWheelDistanceInProbe[Enc_Module.ProbeNumber] +
+					Enc_Module.RightWheelDistanceInProbe[Enc_Module.ProbeNumber];
+
+			if(Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber] != 0)
 			{
-				Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber-1]=Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber-1]/2;
+				Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber]=Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber]/2;
 			}
-	Enc_Module.TakenDistance=Enc_Module.TakenDistance + Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber-1];
+	Enc_Module.TakenDistance=Enc_Module.TakenDistance + Enc_Module.TakenDistanceInProbe[Enc_Module.ProbeNumber];
 
 }
 

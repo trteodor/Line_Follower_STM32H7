@@ -20,6 +20,7 @@ void SM_SensorModuleInit()
 
 float SM_SensorsCalculateError()
 {
+	//I could use cross table to minimalize the function volume but it is done as is :)
 	static int OST_KIER_BL=0;
 
 	if(SensorModule.SensorADCValues[3] > SensorModule.LineDetectValue[3]

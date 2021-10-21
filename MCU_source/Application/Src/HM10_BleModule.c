@@ -24,8 +24,6 @@
 
 extern Robot_Cntrl_t Robot_Cntrl;
 
-#define TimeBeetweenNextDataPart 15
-
 HM10BLE_t HM10BLE_App;
 
 

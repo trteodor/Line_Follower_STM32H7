@@ -147,6 +147,13 @@ static void Speed_ProfileFunction()
 	}
 }
 
+
+/* @brief
+ * Equations for determining the position of the robot based on the collected information.
+ * ref: https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/docs/LF_Desc_PL.pdf
+ * equal number 3.12
+ */
+
 void Create_XY_PositionMap()
 {
 	for(int i=0;  i<Enc_Module.ProbeNumber; i++)

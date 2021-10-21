@@ -3,9 +3,8 @@
 
 
 #include "stdint.h"
+#include "Macro_Settings.h"
 
-#define MaxProbeNumber 4000
-#define EncodersProbeTime 200 //20ms
 
 typedef struct
 {

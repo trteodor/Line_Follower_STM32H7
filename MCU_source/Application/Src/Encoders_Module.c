@@ -11,7 +11,7 @@
 Encoders_Module_t Enc_Module;
 extern uint32_t  us100Timer;
 
-#define OneImpulsDistance 0.000788
+
 
 
 __inline void Enc_AddEncoderImpulsIntoImpulsSum(uint16_t GPIO_Pin)
@@ -34,10 +34,6 @@ __inline void Enc_AddEncoderImpulsIntoImpulsSum(uint16_t GPIO_Pin)
 
 void Enc_ResetModule()
 {
-	//this is rly wrong solution but work! :)
-//	static const Encoders_Module_t EmptyStruct;
-//	Enc_Module=EmptyStruct;
-	//finally better solution:
 	Enc_Module.LeftEncoderImpulsCount = 0;
 	Enc_Module.RightEncoderImpulsCount = 0;
 	Enc_Module.Distance_LeftWheel = 0;
@@ -67,10 +63,10 @@ void Enc_CalculateActualSpeed()
 			((Enc_Module.RightEncoderImpulsCount-Enc_Module.PreviousRightEncoderImpulsCount)*OneImpulsDistance);
 		Enc_Module.RightWheelDistanceInProbe[Enc_Module.ProbeNumber]=Enc_Module.Distance_RightWheel;
 
-		Enc_Module.LeftWheelSpeed=Enc_Module.Distance_LeftWheel/0.02;
+		Enc_Module.LeftWheelSpeed=Enc_Module.Distance_LeftWheel/EncodersProbeTimeInSeconds;
 		Enc_Module.LeftWheelSpeedInProbe[Enc_Module.ProbeNumber]=Enc_Module.LeftWheelSpeed;
 
-		Enc_Module.RightWheelSpeed=Enc_Module.Distance_RightWheel/0.02;
+		Enc_Module.RightWheelSpeed=Enc_Module.Distance_RightWheel/EncodersProbeTimeInSeconds;
 		Enc_Module.RightWheelSpeedInProbe[Enc_Module.ProbeNumber]=Enc_Module.RightWheelSpeed;
 
 		Enc_Module.PreviousLeftEncoderImpulsCount=Enc_Module.LeftEncoderImpulsCount;

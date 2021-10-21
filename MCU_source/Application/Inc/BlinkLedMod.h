@@ -1,7 +1,7 @@
 #ifndef INC_BlinkLedMod_H_
 #define INC_BlinkLedMod_H_
 
-#define LED_TOGGLE_TIME 500
+#include "Macro_Settings.h"
 
 typedef enum
 {

@@ -50,7 +50,7 @@ static float calculatePID()
 		PID_Module.P=SensorModule.PositionErrorValue;
 
 		if(PID_Module.PID_DerivativeTime>MaxPID_DerivativeTime){
-			PID_Module.PID_DerivativeTime=200;
+			PID_Module.PID_DerivativeTime=200; //it don't must exist ;)
 		}
 
 		if(SavedTime_PID_Reg + PID_Module.PID_DerivativeTime < HAL_GetTick()){
@@ -108,9 +108,11 @@ static float CalculateSpeedWhichShouldSetForMotors()
 		 /////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		 ///@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		 /////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		 //Magic Numbers -- delete it!!!
-		PresetSpeed_RightMotor= (220*PresetSpeed_RightMotor )+50 - (220* PID_Module.PID_value);
-		PresetSpeed_LeftMotor=  (220*PresetSpeed_LeftMotor  )+50 + (220* PID_Module.PID_value);
+		 //Experimentally Designated
+		 //Converting PWM value to speed value
+//		 RealMotorSpeed = ax +b ex
+		PresetSpeed_RightMotor= (A_FactorMotor*PresetSpeed_RightMotor )+B_FactorMotor - (A_FactorMotor* PID_Module.PID_value);
+		PresetSpeed_LeftMotor=  (A_FactorMotor*PresetSpeed_LeftMotor  )+B_FactorMotor + (A_FactorMotor* PID_Module.PID_value);
 
 		PID_Module.CalculatedLeftMotorSpeed  = PresetSpeed_LeftMotor;
 		PID_Module.CalculatedRightMotorSpeed = PresetSpeed_RightMotor;

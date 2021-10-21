@@ -33,7 +33,9 @@ General Concept of the robot:
 ![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/OnTrack.PNG)
 
 * 3D Model:
+
 ![3D_ModelPicture](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/3dModelPicturee.PNG)
+
 
 # Acknowledge sources :
 * https://forbot.pl/blog/algorytm-linefollowera-c-poczatkujacych-id2722

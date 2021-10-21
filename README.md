@@ -30,7 +30,7 @@ General Concept of the robot:
 ![MobileApp](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/MobileApp.jpg)
 
 * Robot on Track:
-![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/NaTorze.PNG)
+![NaTorze](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/OnTrack.PNG)
 
 * 3D Model:
 ![3D_ModelPicture](https://github.com/trteodor/FAST_Line_Follower_STM32H7/blob/master/Pictures/3dModelPicturee.PNG)

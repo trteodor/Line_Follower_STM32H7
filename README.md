@@ -43,5 +43,6 @@ General Concept of the robot:
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Jedrzej_Stolarz_praca_inzynierska.pdf
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Witek_Lipieta_praca_magisterska.pdf
 * https://kcir.pwr.edu.pl/~mucha/Pracki/Rafal_Cyminski_praca_magisterska.pdf
+* https://forbot.pl/forum/topic/13552-cukiereczek/
 
 **_If you have question please open issue to this repository, or write comment under video on youtube._**

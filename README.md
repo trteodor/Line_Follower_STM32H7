@@ -5,7 +5,7 @@ This repository contains all data for my first serious microcontroller project -
 This project was created over than 1 years ago, now i decide are to refactor a bit MCU source code and publish the project.
 
 Link to the demo video: 
-* ** ---in november 2021 will be available probably :) **
+* ** https://www.youtube.com/watch?v=agbSKf1r16o **
 
 * I speak in Polish leanguage on the video.
 

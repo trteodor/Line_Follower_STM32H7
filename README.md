@@ -1,6 +1,6 @@
 # FAST_Line_Follower_Robot_STM32H7
 Hi!
-This repository contains all data for my first serious microcontroller project - Line Follower Robot.
+This repository contains all data for my first serious microcontroller project - Line Follower Robot. This project was created for educational purposes.
 
 This project was created over than 1 years ago, now i decide are to refactor a bit MCU source code and publish the project.
 

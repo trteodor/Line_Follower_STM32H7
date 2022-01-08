@@ -1,6 +1,7 @@
-# Newer projekt:
+# You can check also my Newer project:
 
  * https://github.com/trteodor/LineFollower_Light
+
 
 # Line_Follower_Robot_STM32H7
 Hi!

@@ -1,4 +1,8 @@
-# FAST_Line_Follower_Robot_STM32H7
+# Newer projekt:
+
+ * https://github.com/trteodor/LineFollower_Light
+
+# Line_Follower_Robot_STM32H7
 Hi!
 This repository contains all data for my first serious microcontroller project - Line Follower Robot. This project was created for educational purposes.
 
